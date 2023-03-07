@@ -50,6 +50,7 @@ const ImageStyle = styled.div`
     display:flex;
     align-items: center;
     gap: 12px;
+    position: relative;
     span{
         width: 53px;
         height: 53px;
@@ -57,6 +58,22 @@ const ImageStyle = styled.div`
     }
     img{
         width: 100%;
+    }
+    div{
+        position: absolute;
+        width: 150px;
+        height: 47px;
+        padding: 10px 20px;
+        right: -28px;
+        top: 60px;
+        text-align: center;
+
+        background: #171717;
+        color: #fff;
+        border-radius: 0px 0px 0px 20px;
+        font-family: 'Lato';
+        font-weight: 700;
+        font-size: 17px;
     }
 `
 export {ConteinerHeader, SearcheStyle, ImageStyle}
