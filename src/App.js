@@ -1,10 +1,11 @@
-import GlobalStyle from "./globalStyle/globalStyle";
+import GlobalStyle from './globalStyle/globalStyle';
+import Home from './pages/Home';
 
 export default function App() {
-
-	return (
-		<>
-         Ola
-		</>
-	);
+  return (
+    <>
+      <GlobalStyle />
+      <Home />
+    </>
+  );
 }
