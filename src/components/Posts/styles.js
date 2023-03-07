@@ -24,6 +24,7 @@ export const ProfilePic = styled.div`
     height: 40px;
     border: 1px solid #4d4d4d;
     border-radius: 50%;
+    cursor: pointer;
   }
 `;
 
@@ -54,4 +55,5 @@ export const Metadata = styled.div`
   height: 115px;
   border: 1px solid #4d4d4d;
   border-radius: 11px;
+  cursor: pointer;
 `;
