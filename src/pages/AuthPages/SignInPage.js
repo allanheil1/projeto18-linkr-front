@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
+import * as S from './style';
+
 export default function SignInPage(){
 
     const navigate = useNavigate();
@@ -32,7 +34,42 @@ export default function SignInPage(){
 		setSignInData({ ...signInData, [e.target.name]: e.target.value });
 	}
 
-    return(
-        <>SignInPage</>
-    );
+	return(
+		<S.AuthenticationPageStyle>
+  
+		<S.Title>
+		  <h1>
+			linkr
+		  </h1>
+		  <h2>
+			save, share and discover the best links on the web
+		  </h2>
+		</S.Title>
+  
+		<S.Form onSubmit={SignInRequest}>
+		  <input 
+			type='email' placeholder='email'
+			value={signInData.email} name='email'
+			onChange={OnChange} required
+			disabled={isLoading}
+		  />
+		  <input 
+			type='password' placeholder='password'
+			value={signInData.password} name='password'
+			onChange={OnChange} required
+			disabled={isLoading}
+		  />
+		  <button type='submit' disabled={isLoading}>
+				Log In
+		  </button>
+  
+		  <Link to={isLoading ? '' : '/sign-up'}>
+			<S.Message>
+				First time? Create an account!
+			</S.Message>
+		  </Link>
+		</S.Form>
+  
+	  </S.AuthenticationPageStyle>
+	  );
 }

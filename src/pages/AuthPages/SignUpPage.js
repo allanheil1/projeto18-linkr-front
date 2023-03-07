@@ -73,7 +73,7 @@ export default function SignUpPage(){
           disabled={isLoading}
         />
         <button type='submit' disabled={isLoading}>
-              Sign-Up
+              Sign Up
         </button>
 
         <Link to={isLoading ? '' : '/'}>
