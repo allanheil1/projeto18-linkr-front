@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const AuthenticationPageStyle = styled.div`
   width: 100%;
   height: 100vh;
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -30,6 +30,9 @@ export const AuthenticationPageStyle = styled.div`
       font-weight: 700;
       text-decoration: none;
     }
+    @media(min-width: 460px){
+      width: 82%;
+    }
 
   }
 
@@ -48,9 +51,18 @@ export const AuthenticationPageStyle = styled.div`
     text-align: center;
     margin-bottom: 25px;
     background-color: #1877F2;
+    @media(min-width: 460px){
+      width: 82%;
+    }
   }
   button:disabled{
     opacity: 0.75;
+  }
+  @media(min-width: 460px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    background-color: #333333;
   }
 `
 
@@ -71,7 +83,10 @@ export const Title = styled.div`
         font-size: 76px;
         line-height: 84px;
         letter-spacing: 0.05em;
-        text-align: center;
+        @media(min-width: 460px){
+          font-size: 106px;
+          margin-left: 20%;
+        }
     }
     h2{
         width: 237px;
@@ -81,6 +96,20 @@ export const Title = styled.div`
         line-height: 34px;
         text-align: center;
         margin-top: -15px;
+        @media(min-width: 460px){
+          margin-left: 20%;
+          font-size: 43px;
+          width: 55%;
+          line-height: 64px;
+          margin-top: 10px;
+          text-align: start;
+        }
+    }
+    @media(min-width: 460px){
+      height: 100%;
+      width: 63%;
+      align-items: start;
+      box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.25);
     }
 `
 
@@ -98,5 +127,8 @@ export const Form = styled.form`
   align-items: center;
   justify-content: center;
   margin: 30px 0 25px;
+  @media(min-width: 460px){
+    width: 37%;
+  }
 `
 

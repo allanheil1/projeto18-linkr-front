@@ -19,16 +19,16 @@ export default function SignUpPage(){
         e.preventDefault();
         setIsLoading(true);
         console.log(signUpData);
-        const promise = axios.post(process.env.REACT_APP_SIGNUP_URL , signUpData);
-        promise.then(() => {
-          setIsLoading(false);
-          navigate('/');
-        });
-        promise.catch((err) => {
-          setIsLoading(false);
-          const errorMsg = err.response.statusText;
-          alert(`Erro: ${errorMsg}`);
-        })
+        // const promise = axios.post(process.env.REACT_APP_SIGNUP_URL , signUpData);
+        // promise.then(() => {
+        //   setIsLoading(false);
+        //   navigate('/');
+        // });
+        // promise.catch((err) => {
+        //   setIsLoading(false);
+        //   const errorMsg = err.response.statusText;
+        //   alert(`Erro: ${errorMsg}`);
+        // })
     }
 
     function OnChange(e) {
@@ -75,13 +75,14 @@ export default function SignUpPage(){
         <button type='submit' disabled={isLoading}>
               Sign-Up
         </button>
+
+        <Link to={isLoading ? '' : '/'}>
+          <S.Message>
+            Switch back to log in
+          </S.Message>
+        </Link>
       </S.Form>
 
-      <Link to={isLoading ? '' : '/'}>
-        <S.Message>
-          Switch back to log in
-        </S.Message>
-      </Link>
     </S.AuthenticationPageStyle>
     );
 }
