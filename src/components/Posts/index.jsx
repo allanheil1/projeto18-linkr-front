@@ -7,6 +7,7 @@ function Posts() {
       <S.Content>
         <S.ProfilePic>
           <img src="" alt="" />
+          like
         </S.ProfilePic>
         <S.PostContent>
           <h3>Juvenal Juvêncio</h3>
