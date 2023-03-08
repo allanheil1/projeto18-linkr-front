@@ -1,6 +1,7 @@
 import React from 'react';
 import * as S from './styles';
 import Posts from '../../components/Posts';
+import Trending from '../../components/Trending/Trending';
 
 function Home() {
   return (
@@ -18,6 +19,7 @@ function Home() {
         <Posts />
         <Posts />
       </S.Content>
+      <Trending></Trending>
     </S.Container>
   );
 }
