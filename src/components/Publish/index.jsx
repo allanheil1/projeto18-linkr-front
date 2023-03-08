@@ -34,6 +34,10 @@ function Publish() {
 
   return (
     <S.ContainerPublish>
+      <S.ProfilePic>
+        <img src="" alt="" />
+      </S.ProfilePic>
+      <S.ContainerForm>
       <p>What are you going to share today?</p>
       <S.FormPublish>
         <S.Input
@@ -58,6 +62,7 @@ function Publish() {
           {isSubmitting ? 'Publishing...' : 'Publish'}
         </S.SubmitBtn>
       </S.FormPublish>
+      </S.ContainerForm>
     </S.ContainerPublish>
   );
 }

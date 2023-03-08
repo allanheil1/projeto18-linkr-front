@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import Posts from '../../components/Posts';
 import Publish from '../../components/Publish';
 import Trending from '../../components/Trending/Trending';
+import Header from '../../components/Header/Header';
 
 function Home() {
   const location = useLocation();
@@ -11,6 +12,7 @@ function Home() {
 
   return (
     <S.Container>
+      <Header />
       <S.Content>
         <h1>Timeline</h1>
         {isTimelinePage && <Publish />}
