@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
+import * as S from './style';
+
 export default function SignInPage(){
 
     const navigate = useNavigate();
@@ -14,24 +16,60 @@ export default function SignInPage(){
     function SignInRequest(e) {
 		e.preventDefault();
 		setIsLoading(true);
-		const promise = axios.post(process.env.REACT_APP_SIGNIN_URL, signInData);
-		promise.then((res) => {
-			setIsLoading(false);
+		console.log(signInData);
+		// const promise = axios.post(process.env.REACT_APP_SIGNIN_URL, signInData);
+		// promise.then((res) => {
+		// 	setIsLoading(false);
 
-			navigate("/timeline");
-		});
-		promise.catch((err) => {
-			setIsLoading(false);
-			const errorMsg = err.response.statusText;
-			alert(`Erro: ${errorMsg}`);
-		});
+		// 	navigate("/timeline");
+		// });
+		// promise.catch((err) => {
+		// 	setIsLoading(false);
+		// 	const errorMsg = err.response.statusText;
+		// 	alert(`Erro: ${errorMsg}`);
+		// });
 	}
 
     function OnChange(e) {
 		setSignInData({ ...signInData, [e.target.name]: e.target.value });
 	}
 
-    return(
-        <>SignInPage</>
-    );
+	return(
+		<S.AuthenticationPageStyle>
+  
+		<S.Title>
+		  <h1>
+			linkr
+		  </h1>
+		  <h2>
+			save, share and discover the best links on the web
+		  </h2>
+		</S.Title>
+  
+		<S.Form onSubmit={SignInRequest}>
+		  <input 
+			type='email' placeholder='email'
+			value={signInData.email} name='email'
+			onChange={OnChange} required
+			disabled={isLoading}
+		  />
+		  <input 
+			type='password' placeholder='password'
+			value={signInData.password} name='password'
+			onChange={OnChange} required
+			disabled={isLoading}
+		  />
+		  <button type='submit' disabled={isLoading}>
+				Log In
+		  </button>
+  
+		  <Link to={isLoading ? '' : '/sign-up'}>
+			<S.Message>
+				First time? Create an account!
+			</S.Message>
+		  </Link>
+		</S.Form>
+  
+	  </S.AuthenticationPageStyle>
+	  );
 }
