@@ -42,6 +42,28 @@ const SearcheStyle = styled.div`
         right: 8px;
         top: 10px;
     }
+    ul{
+        position: absolute;
+        top: 39px;
+        width: 563px;
+        background-color: #E7E7E7;
+        border-radius: 0px 0px 8px 8px;
+        li{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 12px;
+            margin: 14px 0px;
+            div{
+                width: 39px;
+                height: 39px;
+                border-radius: 50%;
+                img{
+                    width: 100%;
+                }
+            }
+        }
+    }
     @media(max-width: 460px) {
         display: none;
     }

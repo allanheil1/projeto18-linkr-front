@@ -25,9 +25,11 @@ const ProfileStyle = styled.div`
     }
     h2{
         font-family: 'Oswald';
+        max-width:600px;
+        width:100%;
         font-style: normal;
         font-weight: 700;
-        font-size: 43px;
+        font-size: 2.5em;
         color: #fff;
     }
 `
