@@ -69,4 +69,3 @@ export const SubmitBtn = styled.button`
     scale: 0.9;
   }
 `;
-
