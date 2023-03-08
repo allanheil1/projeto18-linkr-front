@@ -1,21 +1,17 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
   background-color: #333333;
-  padding-top: 92px;
+  padding-top: 0px;
   min-width: 100vw;
   min-height: 100vh;
   font-family: 'Lato';
 `;
-
 export const Content = styled.div`
-  width: 611px;
+  width: 375px;
   height: 100%;
-  margin: 0px auto;
-  @media (max-width: 460px) {
-    width: 100%;
-  }
+  margin: 100px auto;
   > h1 {
     font-family: 'Oswald';
     font-weight: 700;
