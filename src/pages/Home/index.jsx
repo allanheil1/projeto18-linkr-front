@@ -18,6 +18,22 @@ function Home() {
         <Posts />
         <Posts />
       </S.Content>
+      <S.Trending>
+        <h1>trending</h1>
+        <div></div>
+        <h2>#javascript</h2>
+        <h2>#react</h2>
+        <h2>#react</h2>
+        <h2>#react</h2>
+        <h2>#react</h2>
+        <h2>#react</h2>
+        <h2>#react</h2>
+        <h2>#react</h2>
+        <h2>#react</h2>
+        <h2>#react</h2>
+
+        <h2></h2>
+      </S.Trending>
     </S.Container>
   );
 }
