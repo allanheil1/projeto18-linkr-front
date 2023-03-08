@@ -3,6 +3,7 @@ import * as S from './styles';
 import { useLocation } from 'react-router-dom';
 import Posts from '../../components/Posts';
 import Publish from '../../components/Publish';
+import Trending from '../../components/Trending/Trending';
 
 function Home() {
   const location = useLocation();
@@ -16,6 +17,7 @@ function Home() {
         <Posts />
         <Posts />
       </S.Content>
+      <Trending></Trending>
     </S.Container>
   );
 }
