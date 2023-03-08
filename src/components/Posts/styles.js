@@ -1,12 +1,18 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  max-width: 611px;
   width: 100%;
   height: 232px;
   background: #171717;
   margin: 16px 0px;
   padding: 9px 15px;
   font-family: 'Lato';
+  border-radius: 16px;
+
+  @media(max-width:611px) {
+    border-radius: 0px;
+  }
 `;
 
 export const Content = styled.div`
