@@ -17,7 +17,6 @@ export const ContainerPublish = styled.div`
     font-weight: 300;
     font-size: 1.1rem;
     line-height: 20px;
-
     color: #707070;
     padding: 0px 15px 10px;
   }
