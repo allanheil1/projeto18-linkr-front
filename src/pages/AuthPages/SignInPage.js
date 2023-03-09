@@ -17,17 +17,17 @@ export default function SignInPage(){
 		e.preventDefault();
 		setIsLoading(true);
 		console.log(signInData);
-		// const promise = axios.post(process.env.REACT_APP_SIGNIN_URL, signInData);
-		// promise.then((res) => {
-		// 	setIsLoading(false);
+		const promise = axios.post(process.env.REACT_APP_SIGNIN_URL, signInData);
+		 promise.then((res) => {
+		 	setIsLoading(false);
 
-		// 	navigate("/timeline");
-		// });
-		// promise.catch((err) => {
-		// 	setIsLoading(false);
-		// 	const errorMsg = err.response.statusText;
-		// 	alert(`Erro: ${errorMsg}`);
-		// });
+		 	navigate("/timeline");
+		});
+		 promise.catch((err) => {
+		 	setIsLoading(false);
+		 	const errorMsg = err.response.statusText;
+		 	alert(`Erro: ${errorMsg}`);
+		});
 	}
 
     function OnChange(e) {
