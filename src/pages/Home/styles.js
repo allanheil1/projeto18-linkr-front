@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
+  justify-content: center;
+  gap: 25px;
   background-color: #333333;
   padding-top: 92px;
   min-width: 100vw;
@@ -12,7 +14,6 @@ export const Container = styled.div`
 export const Content = styled.div`
   width: 611px;
   height: 100%;
-  margin: 0px auto;
   @media (max-width: 460px) {
     width: 100%;
   }

@@ -54,6 +54,7 @@ export const PostContent = styled.div`
     line-height: 20px;
     color: #ffffff;
     margin-bottom: 7px;
+    cursor: pointer;
   }
 
   p {
