@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import { useContext } from "react";
 
 import GlobalStyle from "./globalStyle/globalStyle";
 import SignInPage from "./pages/AuthPages/SignInPage";

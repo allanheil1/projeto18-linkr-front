@@ -1,10 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 import * as S from './style';
 
 export default function SignUpPage(){
+
+    const api = axios.create({
+      baseURL: process.env.REACT_APP_BASE_URL // or process.env.BASE_URL if not using CRA
+    });
 
     const navigate = useNavigate()
 	  const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +22,7 @@ export default function SignUpPage(){
     function SignUpRequest(e){
         e.preventDefault();
         setIsLoading(true);
-        const promise = axios.post(process.env.REACT_APP_SIGNUP_URL , signUpData);
+        const promise = api.post('/sign-up' , signUpData);
         promise.then(() => {
            setIsLoading(false);
            navigate('/');

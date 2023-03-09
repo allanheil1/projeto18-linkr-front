@@ -1,4 +1,6 @@
 import React from 'react';
+import { useContext, useEffect } from 'react';
+import { UserContext } from "../../contexts/UserContext";
 import * as S from './styles';
 import { useLocation } from 'react-router-dom';
 import Posts from '../../components/Posts';
@@ -9,6 +11,11 @@ import Header from '../../components/Header/Header';
 function Home() {
   const location = useLocation();
   const isTimelinePage = location.pathname.endsWith('/timeline');
+  const { checkLogin } = useContext(UserContext);
+
+	useEffect(() => {
+		checkLogin();
+	}, []);
 
   return (
     <S.Container>

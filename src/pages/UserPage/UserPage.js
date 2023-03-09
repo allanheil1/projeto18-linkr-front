@@ -1,5 +1,6 @@
 import Header from "../../components/Header/Header.js"
-import { useState } from "react"
+import { UserContext } from "../../contexts/UserContext";
+import { useState, useEffect, useContext } from 'react';
 import * as S from "./styles.js"
 import {AiOutlineSearch } from "react-icons/ai"
 import DebounceInput from 'react-debounce-input';
@@ -7,23 +8,29 @@ import axios from "axios"
 import Posts from "../../components/Posts/index.jsx";
 
 export default function UserPage() {
+
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const { checkLogin } = useContext(UserContext);
 
     console.log(searchQuery)
     function handleSearch(event) {
-    const searchTerm = event.target.value;
+        const searchTerm = event.target.value;
 
-    if (searchTerm.length >= 3) {
-      axios.get(`localhost:5000/users?name=${searchTerm}`).then((response) => {
-        setSearchResults(response.data);
-      });
-    } else {
-      setSearchResults([]);
+        if (searchTerm.length >= 3) {
+        axios.get(`localhost:5000/users?name=${searchTerm}`).then((response) => {
+            setSearchResults(response.data);
+        });
+        } else {
+        setSearchResults([]);
+        }
+
+        setSearchQuery(searchTerm);
     }
 
-    setSearchQuery(searchTerm);
-  }
+    useEffect(() => {
+        checkLogin();
+    }, []);
 
     return (
         <S.ConteinerUserPage>
