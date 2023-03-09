@@ -17,9 +17,9 @@ function Publish() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsSubmitting(true);
     const token = 'toke';
     if (!formState?.url) return alert('Please enter a URL');
+    setIsSubmitting(true);
 
     try {
       await createPost(formState, token);

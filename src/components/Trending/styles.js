@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const StyleTrending = styled.div`
   margin-top: 100px;
-  margin-right: 100px; 
+  margin-right: 100px;
   background-color: #171717;
   width: 301px;
   height: 406px;

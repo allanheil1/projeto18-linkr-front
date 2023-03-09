@@ -1,29 +1,41 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { AiOutlineDown, AiOutlineSearch, AiOutlineUp } from "react-icons/ai"
 import DebounceInput from 'react-debounce-input';
 import axios from "axios"
 import * as S from "./styles.js"
 import List from "./List.js";
 
+ 
 export default function Header() {
     const [open, setOpen] = useState(false)
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-
+    const [filteredUsers, setFilteredUsers] = useState([]);
+    
+    console.log(filteredUsers)
     console.log(searchQuery)
     function handleSearch(event) {
         const searchTerm = event.target.value;
-
+    
         if (searchTerm.length >= 3) {
-            axios.get(`localhost:5000/users?name=${searchTerm}`).then((response) => {
-                setSearchResults(response.data);
+            axios.get(`http://localhost:5000/users`).then((response) => {
+                const filteredUsers = response.data.filter(user =>
+                    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+                setFilteredUsers(filteredUsers);
             });
         } else {
-            setSearchResults([]);
+            setFilteredUsers([]);
         }
-
+    
         setSearchQuery(searchTerm);
     }
+
+    useEffect(() => {
+        setSearchResults(filteredUsers);
+    }, [filteredUsers]);
+    
+    
     return (
         <S.ConteinerHeader>
             <h1>Linkr</h1>
