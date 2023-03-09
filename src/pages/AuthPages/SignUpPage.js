@@ -10,25 +10,25 @@ export default function SignUpPage(){
 	  const [isLoading, setIsLoading] = useState(false);
     const [signUpData, setSignUpData] = useState({
         email: '',
-        username: '',
         password: '',
-        photoURL: ''
+        username: '',
+        pictureUrl: ''
     });
 
     function SignUpRequest(e){
         e.preventDefault();
         setIsLoading(true);
         console.log(signUpData);
-        // const promise = axios.post(process.env.REACT_APP_SIGNUP_URL , signUpData);
-        // promise.then(() => {
-        //   setIsLoading(false);
-        //   navigate('/');
-        // });
-        // promise.catch((err) => {
-        //   setIsLoading(false);
-        //   const errorMsg = err.response.statusText;
-        //   alert(`Erro: ${errorMsg}`);
-        // })
+        const promise = axios.post(process.env.REACT_APP_SIGNUP_URL , signUpData);
+        promise.then(() => {
+           setIsLoading(false);
+           navigate('/');
+        });
+         promise.catch((err) => {
+           setIsLoading(false);
+           const errorMsg = err.response.statusText;
+           alert(`Erro: ${errorMsg}`);
+        })
     }
 
     function OnChange(e) {
@@ -68,7 +68,7 @@ export default function SignUpPage(){
         />
         <input 
           type='text' placeholder='picture url'
-          value={signUpData.photoURL} name='photoURL'
+          value={signUpData.pictureUrl} name='pictureUrl'
           onChange={OnChange} required
           disabled={isLoading}
         />
