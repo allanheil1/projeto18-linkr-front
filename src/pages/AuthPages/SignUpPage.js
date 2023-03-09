@@ -18,7 +18,6 @@ export default function SignUpPage(){
     function SignUpRequest(e){
         e.preventDefault();
         setIsLoading(true);
-        console.log(signUpData);
         const promise = axios.post(process.env.REACT_APP_SIGNUP_URL , signUpData);
         promise.then(() => {
            setIsLoading(false);

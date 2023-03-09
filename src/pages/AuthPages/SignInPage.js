@@ -16,11 +16,10 @@ export default function SignInPage(){
     function SignInRequest(e) {
 		e.preventDefault();
 		setIsLoading(true);
-		console.log(signInData);
 		const promise = axios.post(process.env.REACT_APP_SIGNIN_URL, signInData);
 		 promise.then((res) => {
 		 	setIsLoading(false);
-
+			localStorage.setItem('token', res.data.token);
 		 	navigate("/timeline");
 		});
 		 promise.catch((err) => {
