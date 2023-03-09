@@ -8,7 +8,6 @@ import Home from "./pages/Home";
 import UserPage from "./pages/UserPage/UserPage";
 import TrendingPage from "./pages/TrendingPage/TrendingPage";
 
-
 export default function App() {
 
 	return (

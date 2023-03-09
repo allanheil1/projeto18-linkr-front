@@ -1,17 +1,20 @@
 import { useNavigate } from "react-router-dom"
 
 
-export default function List({id, name, photo}) {
+export default function List({item}) {
     const navigate = useNavigate();
+
     const redirectPage= (id)=>{
         navigate(`/user/${id}`)
+        console.log(id)
     }
+
     return (
-        <li onClick={()=>redirectPage(id)}>
+        <li onClick={()=>redirectPage(item.id)}>
             <div>
-                <img src={photo} alt={name} />
+                <img src={item.photo} alt={item.name} />
             </div>
-            <p>{name}</p>
+            <p>{item.name}</p>
         </li>
     )
 }
