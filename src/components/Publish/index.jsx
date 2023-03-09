@@ -24,12 +24,11 @@ function Publish() {
     try {
       await createPost(formState, token);
       setFormState(initialFormState);
-      setIsSubmitting(false);
     } catch (error) {
       console.log(error);
       alert('There was an error publishing your link');
-      setIsSubmitting(false);
     }
+    setIsSubmitting(false);
   };
 
   return (

@@ -33,7 +33,6 @@ export const ProfilePic = styled.div`
     background-color: #101010;
     width: 40px;
     height: 40px;
-    border: 1px solid #4d4d4d;
     border-radius: 50%;
     margin-bottom: 15px;
     cursor: pointer;
@@ -54,6 +53,7 @@ export const PostContent = styled.div`
     line-height: 20px;
     color: #ffffff;
     margin-bottom: 7px;
+    cursor: pointer;
   }
 
   p {
@@ -66,9 +66,26 @@ export const PostContent = styled.div`
 `;
 
 export const Metadata = styled.div`
+  display: flex;
   width: 100%;
-  height: 115px;
+  height: 155px;
   border: 1px solid #4d4d4d;
   border-radius: 11px;
   cursor: pointer;
+  > div {
+    padding: 10px;
+    width: 70%;
+    height: 100%;
+  }
+  p {
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 20px;
+    color: #b7b7b7;
+  }
+  > img {
+    display: block;
+    height: 100%;
+    width: 30%;
+  }
 `;
