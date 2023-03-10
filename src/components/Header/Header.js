@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 import { AiOutlineDown, AiOutlineSearch, AiOutlineUp } from "react-icons/ai"
 import DebounceInput from 'react-debounce-input';
 import axios from "axios"
@@ -11,9 +12,9 @@ export default function Header() {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
-    
-    console.log(filteredUsers)
-    console.log(searchQuery)
+    const photo = localStorage.getItem('photo');
+    const navigate = useNavigate();
+
     function handleSearch(event) {
         const searchTerm = event.target.value;
     
@@ -35,6 +36,11 @@ export default function Header() {
         setSearchResults(filteredUsers);
     }, [filteredUsers]);
     
+    function clickLogout(){
+        localStorage.removeItem('token');
+        localStorage.removeItem('photo');
+        navigate("/");
+    }
     
     return (
         <S.ConteinerHeader>
@@ -56,9 +62,9 @@ export default function Header() {
             <S.ImageStyle>
                 {open ? <AiOutlineUp color="#fff" fontSize={24} onClick={() => setOpen(false)} /> : <AiOutlineDown color="#fff" fontSize={24} onClick={() => setOpen(true)} />}
                 <span>
-                    <img src="profile" alt="image profile" />
+                    <img src={photo} alt="image profile" />
                 </span>
-                {open ? <div>Logout</div> : ""}
+                {open ? <button onClick={() => clickLogout()}>Logout</button> : ""}
             </S.ImageStyle>
         </S.ConteinerHeader>
     )

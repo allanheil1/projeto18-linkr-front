@@ -12,21 +12,15 @@ import Header from '../../components/Header/Header';
 function Home() {
   const location = useLocation();
   const token = localStorage.getItem('token')
-
   const isTimelinePage = location.pathname.endsWith('/timeline');
 
   const { checkLogin } = useContext(UserContext);
-
-	useEffect(() => {
-		checkLogin();
-	}, []);
-
   const [isLoading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
 
-
   useEffect(() => {
     const fetchPosts = async () => {
+      checkLogin();
       setLoading(true);
       try {
         const res = await listPost(token);
