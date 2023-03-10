@@ -4,7 +4,7 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { TbTrashFilled } from 'react-icons/tb';
 import { TiPencil } from 'react-icons/ti';
 import { ReactTagify } from 'react-tagify';
-import { getLikes } from '../../service';
+import { getLikes, giveALike, takeALike } from '../../service';
 import * as S from './styles';
 
 function Posts(props) {
@@ -25,6 +25,7 @@ function Posts(props) {
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [qLikes, setQLikes] = useState(0);
+  const token = localStorage.getItem('token');
 
   const redirectPage = (id) => {
     navigate(`/user/${id}`);
@@ -33,10 +34,10 @@ function Posts(props) {
   };
 
   useEffect(()=>{
-    const likes=async()=>{
+    let Likes=async()=>{
       try {
         setIsLoading(true);
-        const res = await getLikes(postId);
+        const res = await getLikes(postId,token);
         setQLikes(res);
         console.log(res);
         setIsLoading(false);
@@ -45,8 +46,31 @@ function Posts(props) {
         setIsLoading(false);
       }
     }
-    likes();
+    Likes();
   })
+
+  useEffect((like) => {
+    if (isLiked) {
+      const giveLike = async () => {
+        try {
+          const res = await giveALike(postId, token);
+          //likes();
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    } else {
+      const takeLike = async () => {
+        try {
+          const res = await takeALike(postId, token);
+          //Likes();
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    }
+  })
+  //  setQLikes
 
   function like() {
     if(isLiked){
