@@ -40,6 +40,22 @@ export const ProfilePic = styled.div`
   }
 `;
 
+export const Like=styled.div`
+  font-size: 10px;
+`;
+
+export const PostHeader=styled.div`
+  display: flex;
+  justify-content: space-between;
+  color: white;
+`;
+
+export const BySide=styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 40px;
+`;
+
 export const PostContent = styled.div`
   height: 100%;
   width: 85%;
