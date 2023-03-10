@@ -18,5 +18,8 @@ export const trendingHashtags = (token) => api.get('/trending', authConfig(token
 
 export const hashtagPosts = (params, token) => api.get(`/hashtag/${params}`, authConfig(token));
 
-export const getLikes= (params)=>api.get(`/like/${params}`);
+export const getLikes= (params)=>api.get(`/likes/${params}`);
 
+export const giveALike= (params, token) => api.post(`/like/${params}`, authConfig(token));
+
+export const takeALike= (params, token) => api.post(`/dislike/${params}`, authConfig(token));

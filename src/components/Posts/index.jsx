@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { TbTrashFilled } from 'react-icons/tb';
 import { TiPencil } from 'react-icons/ti';
 import { ReactTagify } from 'react-tagify';
-import { getLikes } from '../../service';
+import { getLikes, giveALike, takeALike } from '../../service';
 import * as S from './styles';
 
 function Posts(props) {
@@ -24,8 +24,8 @@ function Posts(props) {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [qLikes, setQLikes] = useState("");
-  const [likes, setLikes] =useState("0");
+  const [qLikes, setQLikes] = useState(0);
+  const token = localStorage.getItem('token');
 
   const redirectPage = (id) => {
     navigate(`/user/${id}`);
@@ -33,23 +33,52 @@ function Posts(props) {
     SetSearchQuery(name);
   };
 
-  setLikes=async()=>{
+  useEffect(()=>{
+    let Likes=async()=>{
       try {
         setIsLoading(true);
-        const res = await getLikes(postId);
+        const res = await getLikes(postId,token);
         setQLikes(res);
         console.log(res);
         setIsLoading(false);
       } catch (err) {
         console.log(err)
         setIsLoading(false);
-        alert('An error occured while trying to fetch the trendings, please refresh the page');
       }
-  }
+    }
+    Likes();
+  },[]);
+
+  useEffect((like) => {
+    if (isLiked) {
+      const giveLike = async () => {
+        try {
+          const res = await giveALike(postId, token);
+          //likes();
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    } else {
+      const takeLike = async () => {
+        try {
+          const res = await takeALike(postId, token);
+          //Likes();
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    }
+  },[]);
 
   function like() {
-    setIsLiked(!isLiked);
-    
+    if(isLiked){
+      setIsLiked(!isLiked);
+      setQLikes(qLikes-1);
+    }else{
+      setIsLiked(!isLiked);
+      setQLikes(qLikes+1);
+    }
   }
 
   return (
@@ -58,7 +87,7 @@ function Posts(props) {
         <S.ProfilePic>
           <img src={photo} alt="" />
           {isLiked ? <AiFillHeart onClick={like} /> : <AiOutlineHeart onClick={like} />}
-          <S.Like>{likes} likes</S.Like>
+          <S.Like>{qLikes} likes</S.Like>
         </S.ProfilePic>
         <S.PostContent>
           <S.PostHeader>
