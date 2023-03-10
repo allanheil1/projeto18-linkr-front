@@ -20,14 +20,18 @@ export default function Trending() {
     }, [setTrending])
     return (
         <StyleTrending>
-            <h1>trending</h1>
-            <div></div>
-            {trending.map(t => (<h3>
-                <Link to={`/hashtag/${t.name}`} style={trendingStyle}>
-                    <h2>#{t.name}</h2>
-                </Link>
-            </h3>
-            ))}
+            <div className={trending} data-test="trending">
+
+                <h1>trending</h1>
+                <div></div>
+                {trending.map(t => (<h3>
+                    <Link to={`/hashtag/${t.name}`} style={trendingStyle}>
+                        <h2 data-test="hashtag">#{t.name}</h2>
+                    </Link>
+                </h3>
+                ))}
+            </div>
+
         </StyleTrending>
     )
 }
