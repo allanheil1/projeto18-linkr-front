@@ -31,7 +31,7 @@ export default function TrendingPage(req) {
         <S.Container>
             <Header></Header>
             <S.Content>
-                <h1>#{hashtag}</h1>
+                <h1 data-test="hashtag-title">#{hashtag}</h1>
                 {hashtagPostsArray.map(h => <Posts
                     name={h.name}
                     photo={h.photo}
