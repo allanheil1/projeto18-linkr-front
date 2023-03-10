@@ -15,12 +15,16 @@ export default function UserPage() {
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [infoUser, setInfoUser] = useState([]);
     const { id } = useParams();
+    const token = localStorage.getItem('token');
 
     function handleSearch(event) {
         const searchTerm = event.target.value;
 
         if (searchTerm.length >= 3) {
-            axios.get(`http://localhost:5000/users`).then((response) => {
+            const authConfig = (token) => ({
+                headers: { Authorization: `Bearer ${token}` }
+              })
+            axios.get(`http://localhost:5000/users`,authConfig(token)).then((response) => {
                 const filteredUsers = response.data.filter(user =>
                     user.name.toLowerCase().includes(searchTerm.toLowerCase())
                 );
@@ -40,7 +44,10 @@ export default function UserPage() {
 
     useEffect(() => {
         try {
-            const res = axios.get(`http://localhost:5000/user/${id}`);
+            const authConfig = (token) => ({
+                headers: { Authorization: `Bearer ${token}` }
+              })
+            const res = axios.get(`http://localhost:5000/user/${id}`, authConfig(token));
             res.then((r) => {
                 setInfoUser(r.data);
             }).catch((e) => {
@@ -55,7 +62,7 @@ export default function UserPage() {
             <Header />
             <S.SearcheStyle>
                 <DebounceInput
-                    ata-test="search"
+                    data-test="search"
                     minLength={3}
                     debounceTimeout={300}
                     type="text"
