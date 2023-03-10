@@ -8,7 +8,19 @@ import { getLikes } from '../../service';
 import * as S from './styles';
 
 function Posts(props) {
-  const { id, name, photo, content, url, urlTitle, urlDescription, urlImage, setSearchResults, SetSearchQuery } = props;
+  const {
+    id,
+    postId,
+    name,
+    photo,
+    content,
+    url,
+    urlTitle,
+    urlDescription,
+    urlImage,
+    setSearchResults,
+    SetSearchQuery
+  } = props;
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +62,9 @@ function Posts(props) {
         </S.ProfilePic>
         <S.PostContent>
           <S.PostHeader>
-            <h3 data-test="username" onClick={() => redirectPage(id)}>{name}</h3>
+            <h3 data-test="username" onClick={() => redirectPage(id)}>
+              {name}
+            </h3>
             <S.BySide>
               <TiPencil />
               <TbTrashFilled />
