@@ -26,6 +26,8 @@ export const ProfilePic = styled.div`
   align-items: center;
   width: 10%;
   height: 100%;
+  color: white;
+  font-size: 17px;
   @media (max-width: 461px) {
     width: 15%;
   }
@@ -38,6 +40,22 @@ export const ProfilePic = styled.div`
     margin-bottom: 15px;
     cursor: pointer;
   }
+`;
+
+export const like=styled.div`
+  font-size: 10px;
+`;
+
+export const PostHeader=styled.div`
+  display: flex;
+  justify-content: space-between;
+  color: white;
+`;
+
+export const BySide=styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 40px;
 `;
 
 export const PostContent = styled.div`
