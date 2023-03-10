@@ -9,6 +9,7 @@ export const Container = styled.div`
   padding-top: 9px;
   font-family: 'Lato';
   border-radius: 16px;
+  box-shadow: 4px 4px 8px 0px rgba(180, 180, 207, 0.2);
   @media (max-width: 600px) {
     border-radius: 0px;
   }
@@ -88,16 +89,21 @@ export const Metadata = styled.div`
   border: 1px solid #4d4d4d;
   border-radius: 11px;
   cursor: pointer;
+
   > div {
     padding: 10px;
     width: 70%;
     height: 100%;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
   }
   p {
     font-weight: 400;
     font-size: 17px;
     line-height: 20px;
     color: #b7b7b7;
+
   }
   > img {
     display: block;
@@ -105,3 +111,9 @@ export const Metadata = styled.div`
     width: 30%;
   }
 `;
+
+export const tagStyle = {
+  color: 'white',
+  cursor: 'pointer',
+  fontWeight: 'bold'
+}

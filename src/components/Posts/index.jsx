@@ -3,12 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import {AiOutlineHeart, AiFillHeart} from 'react-icons/ai';
 import {TbTrashFilled} from 'react-icons/tb';
 import {TiPencil} from 'react-icons/ti';
+import { ReactTagify } from 'react-tagify';
 import * as S from './styles';
 
 function Posts(props) {
+  console.log({props: props})
   const { id, name, photo, content, url, urlTitle, urlDescription, urlImage, setSearchResults, SetSearchQuery } = props;
   const navigate = useNavigate();
   const [isLiked,setIsLiked]=useState(false);
+
 
   const redirectPage= (id)=>{
     navigate(`/user/${id}`)
@@ -36,7 +39,11 @@ function Posts(props) {
               <TbTrashFilled/>
             </S.BySide>
           </S.PostHeader>
+          <ReactTagify
+          tagStyle={S.tagStyle}
+          tagClicked={(tag) => navigate(`/hashtag/${tag}`)}>
           <p>{content}</p>
+          </ReactTagify>
           <S.Metadata onClick={() => window.open(url, '_blank', 'noopener,noreferrer')}>
             <div>
             <h3>{urlTitle}</h3>
