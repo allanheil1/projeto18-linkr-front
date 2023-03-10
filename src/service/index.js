@@ -19,3 +19,4 @@ export const trendingHashtags = (token) => api.get('/trending', authConfig(token
 export const hashtagPosts = (params, token) => api.get(`/hashtag/${params}`, authConfig(token));
 
 export const getLikes= (params)=>api.get(`/like/${params}`);
+

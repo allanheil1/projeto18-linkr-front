@@ -13,6 +13,7 @@ function Posts(props) {
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [qLikes, setQLikes] = useState("");
+  const [likes, setLikes] =useState("0");
 
   const redirectPage = (id) => {
     navigate(`/user/${id}`);
@@ -20,19 +21,23 @@ function Posts(props) {
     SetSearchQuery(name);
   };
 
+  likes=async()=>{
+      try {
+        setIsLoading(true);
+        const res = await getLikes(postId);
+        setQLikes(res);
+        console.log(res);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err)
+        setIsLoading(false);
+        alert('An error occured while trying to fetch the trendings, please refresh the page');
+      }
+  }
+  
   function like() {
     setIsLiked(!isLiked);
-    try {
-      setIsLoading(true);
-      const res = await getLikes(postId);
-      setQLikes(res);
-      console.log(res);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err)
-      setIsLoading(false);
-      alert('An error occured while trying to fetch the trendings, please refresh the page');
-    }
+    
   }
 
   return (
@@ -41,7 +46,7 @@ function Posts(props) {
         <S.ProfilePic>
           <img src={photo} alt="" />
           {isLiked ? <AiFillHeart onClick={like} /> : <AiOutlineHeart onClick={like} />}
-          <S.Like>{qLikes}</S.Like>
+          <S.Like>{likes} likes</S.Like>
         </S.ProfilePic>
         <S.PostContent>
           <S.PostHeader>
