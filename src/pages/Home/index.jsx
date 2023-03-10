@@ -15,16 +15,12 @@ function Home() {
   const isTimelinePage = location.pathname.endsWith('/timeline');
 
   const { checkLogin } = useContext(UserContext);
-
-	useEffect(() => {
-		checkLogin();
-	}, []);
-
   const [isLoading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
+      checkLogin();
       setLoading(true);
       try {
         const res = await listPost(token);
