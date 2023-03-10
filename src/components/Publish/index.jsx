@@ -7,6 +7,7 @@ function Publish() {
     url: '',
     content: ''
   };
+  const token = localStorage.getItem('token')
   const [formState, setFormState] = useState(initialFormState);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -17,7 +18,6 @@ function Publish() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const token = 'toke';
     if (!formState?.url) return alert('Please enter a URL');
     setIsSubmitting(true);
 

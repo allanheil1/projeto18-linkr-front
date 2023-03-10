@@ -3,8 +3,8 @@ import React from 'react';
 import * as S from './styles';
 
 function Posts(props) {
-  console.log({props: props})
-  const { name, photo, content, url, urlTitle, urlDescription, urlImage } = props;
+  const { id, name, photo, content, url, urlTitle, urlDescription, urlImage } = props;
+
   return (
     <S.Container>
       <S.Content>

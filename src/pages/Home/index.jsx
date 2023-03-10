@@ -12,7 +12,7 @@ import Header from '../../components/Header/Header';
 function Home() {
   const location = useLocation();
   const token = localStorage.getItem('token')
-  console.log({token})
+
   const isTimelinePage = location.pathname.endsWith('/timeline');
 
   const { checkLogin } = useContext(UserContext);
@@ -23,7 +23,7 @@ function Home() {
 
   const [isLoading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
-  console.log(posts)
+
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -52,6 +52,7 @@ function Home() {
           ? <h1>There are no posts yet</h1>
           : posts.map((p) => (
               <Posts
+                id={p.id}
                 name={p.name}
                 photo={p.photo}
                 content={p.content}
