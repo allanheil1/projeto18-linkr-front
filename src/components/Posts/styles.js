@@ -89,3 +89,9 @@ export const Metadata = styled.div`
     width: 30%;
   }
 `;
+
+export const tagStyle = {
+  color: 'white',
+  cursor: 'pointer',
+  fontWeight: 'bold'
+}
