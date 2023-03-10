@@ -12,8 +12,13 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 611px;
   height: 100%;
+
   @media (max-width: 460px) {
     width: 100%;
   }

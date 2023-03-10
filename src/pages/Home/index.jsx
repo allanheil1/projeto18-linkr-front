@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from "../../contexts/UserContext";
 import * as S from './styles';
 import { useLocation } from 'react-router-dom';
@@ -11,6 +11,8 @@ import Header from '../../components/Header/Header';
 
 function Home() {
   const location = useLocation();
+  const token = localStorage.getItem('token')
+  console.log({token})
   const isTimelinePage = location.pathname.endsWith('/timeline');
 
   const { checkLogin } = useContext(UserContext);
@@ -27,7 +29,7 @@ function Home() {
     const fetchPosts = async () => {
       setLoading(true);
       try {
-        const res = await listPost();
+        const res = await listPost(token);
         setPosts(res.data.metadataArray);
       } catch (error) {
         console.log(error);
@@ -45,9 +47,9 @@ function Home() {
         <h1>Timeline</h1>
         {isTimelinePage && <Publish />}
         {isLoading
-          ? 'Loading'
+          ? <h1>Loading</h1>
           : posts.length === 0
-          ? 'There are no posts yet'
+          ? <h1>There are no posts yet</h1>
           : posts.map((p) => (
               <Posts
                 name={p.name}
