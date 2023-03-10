@@ -46,6 +46,7 @@ function Home() {
           ? <h1>There are no posts yet</h1>
           : posts.map((p) => (
               <Posts
+                id={p.id}
                 name={p.name}
                 photo={p.photo}
                 content={p.content}
