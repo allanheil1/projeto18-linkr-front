@@ -54,7 +54,7 @@ function Posts(props) {
           <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => navigate(`/hashtag/${tag}`)}>
             <p data-test="description">{content}</p>
           </ReactTagify>
-          <S.Metadata data-test="link" onClick={() => window.open(url, '_blank', 'noopener,noreferrer')}>
+          <S.Metadata data-test="link" href={url} target="_blank" rel="noopener noreferrer">
             <div>
               <h3>{urlTitle}</h3>
               <p> {urlDescription}</p>
