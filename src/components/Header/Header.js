@@ -47,6 +47,7 @@ export default function Header() {
             <h1>Linkr</h1>
             <S.SearcheStyle>
                 <DebounceInput
+                    data-test="search"
                     minLength={3}
                     debounceTimeout={300}
                     type="text"

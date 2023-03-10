@@ -55,6 +55,7 @@ export default function UserPage() {
             <Header />
             <S.SearcheStyle>
                 <DebounceInput
+                    ata-test="search"
                     minLength={3}
                     debounceTimeout={300}
                     type="text"
@@ -74,7 +75,7 @@ export default function UserPage() {
                             <span>
                                 <img src={infoUser.photo} alt={infoUser.name} />
                             </span>
-                            <h2>jeff’s posts</h2>
+                            <h2>{infoUser[0].name}’s posts</h2>
                         </S.ProfileStyle>
                     </div>
                     {infoUser.map(p => <Posts id={p.id}
