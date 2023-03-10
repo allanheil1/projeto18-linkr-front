@@ -27,6 +27,7 @@ export const ProfilePic = styled.div`
   align-items: center;
   width: 10%;
   height: 100%;
+  color: white;
   @media (max-width: 461px) {
     width: 15%;
   }
@@ -42,6 +43,7 @@ export const ProfilePic = styled.div`
 
 export const Like=styled.div`
   font-size: 10px;
+  color: white;
 `;
 
 export const PostHeader=styled.div`

@@ -27,7 +27,7 @@ function Posts(props) {
         <S.ProfilePic>
           <img src={photo} alt="" />
           {isLiked ? <AiFillHeart onClick={like} /> : <AiOutlineHeart onClick={like} />}
-          <S.Like>10 likes</S.Like>
+          <S.Like>{/* {likes} */}</S.Like>
         </S.ProfilePic>
         <S.PostContent>
           <S.PostHeader>
