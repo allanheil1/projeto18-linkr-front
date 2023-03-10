@@ -19,18 +19,31 @@ export default function SignUpPage() {
   });
 
   function SignUpRequest(e) {
-    e.preventDefault();
-    setIsLoading(true);
-    const promise = api.post('/sign-up', signUpData);
-    promise.then(() => {
-      setIsLoading(false);
-      navigate('/');
-    });
-    promise.catch((err) => {
-      setIsLoading(false);
-      const errorMsg = err.response.statusText;
-      alert(`Erro: ${errorMsg}`);
-    });
+    if(signUpData.email === '' || 
+       signUpData.password === '' ||
+       signUpData.username === '' ||
+       signUpData.pictureUrl === ''
+    ){
+      e.preventDefault();
+      alert("Please, fill in all sign-up information");
+    }else{
+      e.preventDefault();
+      setIsLoading(true);
+      const promise = api.post('/sign-up', signUpData);
+      promise.then(() => {
+        setIsLoading(false);
+        navigate('/');
+      });
+      promise.catch((err) => {
+        setIsLoading(false);
+				if(err.response.status === 409){
+					alert(`This email has already been taken. Error: ${err.response.status}: CONFLICT`)
+				}else{
+					const errorMsg = err.response.statusText;
+					alert(`Erro: ${errorMsg}`);
+				}
+      });
+    }
   }
 
   function OnChange(e) {
@@ -52,7 +65,6 @@ export default function SignUpPage() {
           value={signUpData.email}
           name="email"
           onChange={OnChange}
-          required
           disabled={isLoading}
         />
         <input
@@ -62,7 +74,6 @@ export default function SignUpPage() {
           value={signUpData.password}
           name="password"
           onChange={OnChange}
-          required
           disabled={isLoading}
         />
         <input
@@ -72,7 +83,6 @@ export default function SignUpPage() {
           value={signUpData.username}
           name="username"
           onChange={OnChange}
-          required
           disabled={isLoading}
         />
         <input
@@ -82,7 +92,6 @@ export default function SignUpPage() {
           value={signUpData.pictureUrl}
           name="pictureUrl"
           onChange={OnChange}
-          required
           disabled={isLoading}
         />
         <button data-test="sign-up-btn" type="submit" disabled={isLoading}>
