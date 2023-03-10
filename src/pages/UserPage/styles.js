@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const ConteinerUserPage = styled.div`
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
     background-color: #333333;
     display: flex;
@@ -10,6 +10,9 @@ const ConteinerUserPage = styled.div`
     align-items: center;
 `
 const ConteinerMain = styled.div`
+     display: flex;
+    justify-content: center;
+    gap: 25px;
     margin: 140px auto;
 `
 const ProfileStyle = styled.div`

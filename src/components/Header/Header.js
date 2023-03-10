@@ -56,7 +56,7 @@ export default function Header() {
                 />
                 <span> <AiOutlineSearch color=" #C6C6C6" fontSize={24} /></span>
                 <ul>
-                    {searchResults.map((item)=> <List item={item}/>)}
+                    {searchResults.map((item)=> <List item={item} setSearchResults={setSearchResults} SetSearchQuery={setSearchQuery}/>)}
                 </ul>
             </S.SearcheStyle>
             <S.ImageStyle>
