@@ -21,7 +21,7 @@ function Posts(props) {
     SetSearchQuery(name);
   };
 
-  likes=async()=>{
+  setLikes=async()=>{
       try {
         setIsLoading(true);
         const res = await getLikes(postId);
@@ -34,7 +34,7 @@ function Posts(props) {
         alert('An error occured while trying to fetch the trendings, please refresh the page');
       }
   }
-  
+
   function like() {
     setIsLiked(!isLiked);
     
