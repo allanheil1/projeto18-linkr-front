@@ -84,7 +84,7 @@ export const PostContent = styled.div`
   }
 `;
 
-export const Metadata = styled.div`
+export const Metadata = styled.a`
   display: flex;
   width: 100%;
   height: 155px;
