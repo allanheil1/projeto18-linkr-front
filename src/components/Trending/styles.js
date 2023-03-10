@@ -21,6 +21,7 @@ export const StyleTrending = styled.div`
     margin-bottom: 12px;
   }
   > h2{
+    cursor: pointer;
     font-family: 'Lato';
     font-style: normal;
     font-weight: 700;
