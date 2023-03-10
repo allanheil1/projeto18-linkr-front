@@ -47,7 +47,7 @@ function Posts(props) {
       }
     }
     Likes();
-  })
+  },[]);
 
   useEffect((like) => {
     if (isLiked) {
@@ -69,8 +69,7 @@ function Posts(props) {
         }
       }
     }
-  })
-  //  setQLikes
+  },[]);
 
   function like() {
     if(isLiked){
