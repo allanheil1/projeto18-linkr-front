@@ -15,8 +15,8 @@ export default function UserPage() {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [infoUser, setInfoUser] = useState([]);
   const { id } = useParams();
-    const token = localStorage.getItem('token');
-    console.log(infoUser)
+  const token = localStorage.getItem('token');
+
   function handleSearch(event) {
     const searchTerm = event.target.value;
 
