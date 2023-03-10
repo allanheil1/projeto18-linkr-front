@@ -79,9 +79,11 @@ const ImageStyle = styled.div`
         border-radius: 50%;
     }
     img{
-        width: 100%;
+        width: 53px;
+        height: 53px;
+        border-radius: 50%;
     }
-    div{
+    button{
         position: absolute;
         width: 150px;
         height: 47px;
@@ -92,6 +94,7 @@ const ImageStyle = styled.div`
 
         background: #171717;
         color: #fff;
+        border: none;
         border-radius: 0px 0px 0px 20px;
         font-family: 'Lato';
         font-weight: 700;

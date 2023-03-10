@@ -12,7 +12,6 @@ import Header from '../../components/Header/Header';
 function Home() {
   const location = useLocation();
   const token = localStorage.getItem('token')
-  console.log({token})
   const isTimelinePage = location.pathname.endsWith('/timeline');
 
   const { checkLogin } = useContext(UserContext);
@@ -23,7 +22,6 @@ function Home() {
 
   const [isLoading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
-  console.log(posts)
 
   useEffect(() => {
     const fetchPosts = async () => {
