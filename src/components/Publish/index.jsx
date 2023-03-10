@@ -34,7 +34,7 @@ function Publish({ setRefresh }) {
   };
 
   return (
-    <S.ContainerPublish>
+    <S.ContainerPublish data-test="publish-box">
       <S.ProfilePic>
         <img src="" alt="" />
       </S.ProfilePic>
@@ -42,6 +42,7 @@ function Publish({ setRefresh }) {
         <p>What are you going to share today?</p>
         <S.FormPublish>
           <S.Input
+            data-test="link"
             height="30px"
             type="url"
             name="url"
@@ -50,6 +51,7 @@ function Publish({ setRefresh }) {
             onChange={handleInputChange}
           />
           <S.Input
+            data-test="description"
             padding="15px"
             height="47px"
             type="text"
@@ -59,7 +61,7 @@ function Publish({ setRefresh }) {
             value={formState.content}
             onChange={handleInputChange}
           />
-          <S.SubmitBtn onClick={handleSubmit} disabled={isSubmitting}>
+          <S.SubmitBtn data-test="publish-btn" onClick={handleSubmit} disabled={isSubmitting}>
             {isSubmitting ? 'Publishing...' : 'Publish'}
           </S.SubmitBtn>
         </S.FormPublish>

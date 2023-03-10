@@ -44,7 +44,7 @@ function Home() {
         {isLoading ? (
           <h1>Loading</h1>
         ) : posts.length === 0 ? (
-          <h1>There are no posts yet</h1>
+          <h1 data-test="message">There are no posts yet</h1>
         ) : (
           posts.map((p, i) => (
             <Posts
