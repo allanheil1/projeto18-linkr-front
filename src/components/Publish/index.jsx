@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createPost } from '../../service';
+import { createPost, saveHashtag } from '../../service';
 import * as S from './styles';
 
 function Publish({ setRefresh }) {
@@ -23,7 +23,9 @@ function Publish({ setRefresh }) {
 
     try {
       const { url, content } = formState;
+      const hashtag = content.match(/#\w+/g);
       await createPost(url, content, token);
+      await saveHashtag(hashtag, token);
       setFormState(initialFormState);
       setRefresh((current) => !current);
     } catch (error) {

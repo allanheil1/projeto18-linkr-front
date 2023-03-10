@@ -23,6 +23,10 @@ export default function UserPage() {
             headers: { Authorization: `Bearer ${token}` }
           });
         if (searchTerm.length >= 3) {
+            const authConfig = (token) => ({
+                headers: { Authorization: `Bearer ${token}` }
+              })
+
             axios.get(`http://localhost:5000/users`,authConfig(token)).then((response) => {
                 const filteredUsers = response.data.filter(user =>
                     user.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -45,7 +49,9 @@ export default function UserPage() {
         try {
             const authConfig = (token) => ({
                 headers: { Authorization: `Bearer ${token}` }
+
               });
+a
             const res = axios.get(`http://localhost:5000/user/${id}`, authConfig(token));
             res.then((r) => {
                 setInfoUser(r.data);
@@ -61,7 +67,7 @@ export default function UserPage() {
             <Header />
             <S.SearcheStyle>
                 <DebounceInput
-                    ata-test="search"
+                    data-test="search"
                     minLength={3}
                     debounceTimeout={300}
                     type="text"

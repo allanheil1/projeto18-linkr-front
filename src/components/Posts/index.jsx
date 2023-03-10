@@ -99,7 +99,7 @@ function Posts(props) {
               <TbTrashFilled />
             </S.BySide>
           </S.PostHeader>
-          <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => navigate(`/hashtag/${tag}`)}>
+          <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#","")}`)}>
             <p data-test="description">{content}</p>
           </ReactTagify>
           <S.Metadata data-test="link" href={url} target="_blank" rel="noopener noreferrer">
