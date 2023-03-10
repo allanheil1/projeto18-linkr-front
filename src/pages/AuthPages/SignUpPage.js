@@ -20,18 +20,30 @@ export default function SignUpPage(){
     });
 
     function SignUpRequest(e){
+      if(signUpData.email === '' || 
+        signUpData.password === '' ||
+        signUpData.username === '' ||
+        signUpData.pictureUrl === ''
+      ){
+        e.preventDefault();
+        alert("Please, fill in all sign-up information");
+      }else{
         e.preventDefault();
         setIsLoading(true);
         const promise = api.post('/sign-up' , signUpData);
         promise.then(() => {
-           setIsLoading(false);
-           navigate('/');
+            setIsLoading(false);
+            navigate('/');
         });
-         promise.catch((err) => {
-           setIsLoading(false);
-           const errorMsg = err.response.statusText;
-           alert(`Erro: ${errorMsg}`);
+          promise.catch((err) => {
+            setIsLoading(false);
+            if(err.response.status === 409){
+              alert('This email has already been taken')
+            }
+            const errorMsg = err.response.statusText;
+            alert(`Erro: ${errorMsg}`);
         })
+      }
     }
 
     function OnChange(e) {
@@ -54,25 +66,25 @@ export default function SignUpPage(){
         <input 
           type='email' placeholder='email'
           value={signUpData.email} name='email'
-          onChange={OnChange} required
+          onChange={OnChange}
           disabled={isLoading}
         />
         <input 
           type='password' placeholder='password'
           value={signUpData.password} name='password'
-          onChange={OnChange} required
+          onChange={OnChange}
           disabled={isLoading}
         />
         <input 
           type='text' placeholder='username'
           value={signUpData.username} name='username'
-          onChange={OnChange} required
+          onChange={OnChange}
           disabled={isLoading}
         />
         <input 
           type='text' placeholder='picture url'
           value={signUpData.pictureUrl} name='pictureUrl'
-          onChange={OnChange} required
+          onChange={OnChange}
           disabled={isLoading}
         />
         <button type='submit' disabled={isLoading}>

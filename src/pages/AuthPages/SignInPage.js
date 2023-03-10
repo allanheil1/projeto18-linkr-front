@@ -25,20 +25,30 @@ export default function SignInPage(){
 	// }, []);
 
     function SignInRequest(e) {
-		e.preventDefault();
-		setIsLoading(true);
-		const promise = api.post('/', signInData);
-		 promise.then((res) => {
-		 	setIsLoading(false);
-			localStorage.setItem('token', res.data.token);
-			localStorage.setItem('photo', res.data.photo);
-		 	navigate("/timeline");
-		});
-		 promise.catch((err) => {
-		 	setIsLoading(false);
-		 	const errorMsg = err.response.statusText;
-		 	alert(`Erro: ${errorMsg}`);
-		});
+		if(signInData.email === '' || 
+           signInData.password === ''
+		){
+			e.preventDefault();
+			alert("Please, fill in all sign-in information");
+		}else{
+			e.preventDefault();
+			setIsLoading(true);
+			const promise = api.post('/', signInData);
+			promise.then((res) => {
+				setIsLoading(false);
+				localStorage.setItem('token', res.data.token);
+				localStorage.setItem('photo', res.data.photo);
+				navigate("/timeline");
+			});
+			promise.catch((err) => {
+				setIsLoading(false);
+				if(err.response.status === 401){
+					alert('Email and/or password are/is incorrect')
+				  }
+				const errorMsg = err.response.statusText;
+				alert(`Erro: ${errorMsg}`);
+			});
+		}
 	}
 
     function OnChange(e) {
@@ -61,13 +71,13 @@ export default function SignInPage(){
 		  <input 
 			type='email' placeholder='email'
 			value={signInData.email} name='email'
-			onChange={OnChange} required
+			onChange={OnChange} 
 			disabled={isLoading}
 		  />
 		  <input 
 			type='password' placeholder='password'
 			value={signInData.password} name='password'
-			onChange={OnChange} required
+			onChange={OnChange} 
 			disabled={isLoading}
 		  />
 		  <button type='submit' disabled={isLoading}>
