@@ -14,12 +14,13 @@ export default function Header() {
     const [filteredUsers, setFilteredUsers] = useState([]);
     const photo = localStorage.getItem('photo');
     const navigate = useNavigate();
-
+    const url = process.env.REACT_APP_API_URL
+    
     function handleSearch(event) {
         const searchTerm = event.target.value;
     
         if (searchTerm.length >= 3) {
-            axios.get(`http://localhost:5000/users`).then((response) => {
+            axios.get(`${url}/users`).then((response) => {
                 const filteredUsers = response.data.filter(user =>
                     user.name.toLowerCase().includes(searchTerm.toLowerCase())
                 );
