@@ -2,10 +2,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
+import { UserContext } from "../../contexts/UserContext";
 import * as S from './style';
 
 export default function SignInPage(){
 
+	const api = axios.create({
+		baseURL: process.env.REACT_APP_BASE_URL // or process.env.BASE_URL if not using CRA
+	  });
+  
     const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 	const [signInData, setSignInData] = useState({
@@ -13,10 +18,16 @@ export default function SignInPage(){
 		password: '',
 	});
 
+	// useEffect(() => {
+	// 	if(localStorage.getItem('token')){
+	// 		navigate("/timeline");
+	// 	};
+	// }, []);
+
     function SignInRequest(e) {
 		e.preventDefault();
 		setIsLoading(true);
-		const promise = axios.post(process.env.REACT_APP_SIGNIN_URL, signInData);
+		const promise = api.post('/', signInData);
 		 promise.then((res) => {
 		 	setIsLoading(false);
 			localStorage.setItem('token', res.data.token);

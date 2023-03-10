@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useContext, useEffect } from 'react';
+import { UserContext } from "../../contexts/UserContext";
 import * as S from './styles';
 import { useLocation } from 'react-router-dom';
 import { listPost } from '../../service';
@@ -10,6 +12,13 @@ import Header from '../../components/Header/Header';
 function Home() {
   const location = useLocation();
   const isTimelinePage = location.pathname.endsWith('/timeline');
+
+  const { checkLogin } = useContext(UserContext);
+
+	useEffect(() => {
+		checkLogin();
+	}, []);
+
   const [isLoading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   console.log(posts)
