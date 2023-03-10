@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { TbTrashFilled } from 'react-icons/tb';
@@ -24,8 +24,7 @@ function Posts(props) {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [qLikes, setQLikes] = useState("");
-  const [likes, setLikes] =useState("0");
+  const [qLikes, setQLikes] = useState(0);
 
   const redirectPage = (id) => {
     navigate(`/user/${id}`);
@@ -33,7 +32,8 @@ function Posts(props) {
     SetSearchQuery(name);
   };
 
-  setLikes=async()=>{
+  useEffect(()=>{
+    const likes=async()=>{
       try {
         setIsLoading(true);
         const res = await getLikes(postId);
@@ -43,13 +43,19 @@ function Posts(props) {
       } catch (err) {
         console.log(err)
         setIsLoading(false);
-        alert('An error occured while trying to fetch the trendings, please refresh the page');
       }
-  }
+    }
+    likes();
+  })
 
   function like() {
-    setIsLiked(!isLiked);
-    
+    if(isLiked){
+      setIsLiked(!isLiked);
+      setQLikes(qLikes-1);
+    }else{
+      setIsLiked(!isLiked);
+      setQLikes(qLikes+1);
+    }
   }
 
   return (
@@ -58,7 +64,7 @@ function Posts(props) {
         <S.ProfilePic>
           <img src={photo} alt="" />
           {isLiked ? <AiFillHeart onClick={like} /> : <AiOutlineHeart onClick={like} />}
-          <S.Like>{likes} likes</S.Like>
+          <S.Like>{qLikes} likes</S.Like>
         </S.ProfilePic>
         <S.PostContent>
           <S.PostHeader>
