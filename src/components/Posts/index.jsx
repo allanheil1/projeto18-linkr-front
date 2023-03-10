@@ -7,6 +7,7 @@ function Posts(props) {
   const { id, name, photo, content, url, urlTitle, urlDescription, urlImage, setSearchResults, SetSearchQuery } = props;
   const navigate = useNavigate();
 
+
   const redirectPage= (id)=>{
     navigate(`/user/${id}`)
     setSearchResults([])

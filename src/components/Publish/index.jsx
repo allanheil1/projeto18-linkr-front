@@ -18,12 +18,11 @@ function Publish({ setRefresh }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const {url, content = ""} = formState
     if (!formState?.url) return alert('Please enter a URL');
     setIsSubmitting(true);
 
     try {
-      const param = {}
+      const { url, content } = formState;
       await createPost(url, content, token);
       setFormState(initialFormState);
       setRefresh((current) => !current);

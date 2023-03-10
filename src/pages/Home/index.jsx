@@ -18,6 +18,7 @@ function Home() {
   const [refresh, setRefresh] = useState(false);
   const [posts, setPosts] = useState([]);
 
+
   useEffect(() => {
     const fetchPosts = async () => {
       checkLogin();
@@ -39,7 +40,7 @@ function Home() {
       <Header />
       <S.Content>
         <h1>Timeline</h1>
-        {isTimelinePage && <Publish setRefresh={setRefresh} />}
+        {isTimelinePage && <Publish setRefresh={setRefresh}/>}
         {isLoading ? (
           <h1>Loading</h1>
         ) : posts.length === 0 ? (
