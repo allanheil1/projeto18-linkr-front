@@ -20,10 +20,12 @@ export default function UserPage() {
   function handleSearch(event) {
     const searchTerm = event.target.value;
 
+
         if (searchTerm.length >= 3) {
             const authConfig = (token) => ({
                 headers: { Authorization: `Bearer ${token}` }
               })
+
             axios.get(`http://localhost:5000/users`,authConfig(token)).then((response) => {
                 const filteredUsers = response.data.filter(user =>
                     user.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -43,7 +45,11 @@ export default function UserPage() {
 
     useEffect(() => {
         try {
-            const res = axios.get(`http://localhost:5000/user/${id}`);
+            const authConfig = (token) => ({
+                headers: { Authorization: `Bearer ${token}` }
+
+              });
+            const res = axios.get(`http://localhost:5000/user/${id}`, authConfig(token));
             res.then((r) => {
                 setInfoUser(r.data);
             }).catch((e) => {
