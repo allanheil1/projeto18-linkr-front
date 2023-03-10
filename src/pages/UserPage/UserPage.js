@@ -1,27 +1,26 @@
-import Header from "../../components/Header/Header.js"
+import Header from '../../components/Header/Header.js';
 import { useState, useEffect } from 'react';
-import * as S from "./styles.js"
-import { AiOutlineSearch } from "react-icons/ai"
+import * as S from './styles.js';
+import { AiOutlineSearch } from 'react-icons/ai';
 import DebounceInput from 'react-debounce-input';
-import axios from "axios"
-import Posts from "../../components/Posts/index.jsx";
-import List from "../../components/Header/List.js";
-import { useParams } from "react-router-dom";
-import Trending from "../../components/Trending/Trending.js";
+import axios from 'axios';
+import Posts from '../../components/Posts/index.jsx';
+import List from '../../components/Header/List.js';
+import { useParams } from 'react-router-dom';
+import Trending from '../../components/Trending/Trending.js';
 
 export default function UserPage() {
-    const [searchQuery, setSearchQuery] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
-    const [filteredUsers, setFilteredUsers] = useState([]);
-    const [infoUser, setInfoUser] = useState([]);
-    const { id } = useParams();
-    const token = localStorage.getItem('token');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [infoUser, setInfoUser] = useState([]);
+  const { id } = useParams();
+  const token = localStorage.getItem('token');
 
-    function handleSearch(event) {
-        const searchTerm = event.target.value;
-        const authConfig = (token) => ({
-            headers: { Authorization: `Bearer ${token}` }
-          });
+  function handleSearch(event) {
+    const searchTerm = event.target.value;
+
+
         if (searchTerm.length >= 3) {
             const authConfig = (token) => ({
                 headers: { Authorization: `Bearer ${token}` }
@@ -37,13 +36,12 @@ export default function UserPage() {
             setFilteredUsers([]);
         }
 
-        setSearchQuery(searchTerm);
-    }
+    setSearchQuery(searchTerm);
+  }
 
-    useEffect(() => {
-        setSearchResults(filteredUsers);
-    }, [filteredUsers]);
-
+  useEffect(() => {
+    setSearchResults(filteredUsers);
+  }, [filteredUsers]);
 
     useEffect(() => {
         try {
@@ -51,7 +49,6 @@ export default function UserPage() {
                 headers: { Authorization: `Bearer ${token}` }
 
               });
-a
             const res = axios.get(`http://localhost:5000/user/${id}`, authConfig(token));
             res.then((r) => {
                 setInfoUser(r.data);
@@ -67,7 +64,6 @@ a
             <Header />
             <S.SearcheStyle>
                 <DebounceInput
-                    data-test="search"
                     minLength={3}
                     debounceTimeout={300}
                     type="text"
@@ -87,7 +83,7 @@ a
                             <span>
                                 <img src={infoUser.photo} alt={infoUser.name} />
                             </span>
-                            <h2>{infoUser[0].name}’s posts</h2>
+                            <h2>jeff’s posts</h2>
                         </S.ProfileStyle>
                     </div>
                     {infoUser.map(p => <Posts id={p.id}
@@ -98,7 +94,7 @@ a
                         urlTitle={p.urlTitle}
                         urlDescription={p.urlDescription}
                         urlImage={p.urlImage}
-                        setSearchResults={setSearchResults} 
+                        setSearchResults={setSearchResults}
                         SetSearchQuery={setSearchQuery} />)}
                 </div>
                 <Trending />
@@ -106,4 +102,3 @@ a
         </S.ConteinerUserPage>
     )
 }
-

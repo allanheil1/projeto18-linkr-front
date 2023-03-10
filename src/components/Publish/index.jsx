@@ -8,6 +8,7 @@ function Publish({ setRefresh }) {
     content: ''
   };
   const token = localStorage.getItem('token');
+  const profilePic =localStorage.getItem('photo');
   const [formState, setFormState] = useState(initialFormState);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -38,7 +39,7 @@ function Publish({ setRefresh }) {
   return (
     <S.ContainerPublish data-test="publish-box">
       <S.ProfilePic>
-        <img src="" alt="" />
+        <img src={profilePic} alt="Profile pic" />
       </S.ProfilePic>
       <S.ContainerForm>
         <p>What are you going to share today?</p>

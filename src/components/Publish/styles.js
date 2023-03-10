@@ -33,7 +33,6 @@ export const ProfilePic = styled.div`
     background-color: #101010;
     width: 50px;
     height: 50px;
-    border: 1px solid gray;
     border-radius: 50%;
     margin-bottom: 15px;
     cursor: pointer;
