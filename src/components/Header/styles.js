@@ -54,6 +54,7 @@ const SearcheStyle = styled.div`
             gap: 12px;
             padding: 6px 12px;
             margin: 14px 0px;
+            cursor: pointer;
             div{
                 width: 39px;
                 height: 39px;

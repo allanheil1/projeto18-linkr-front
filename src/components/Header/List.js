@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom"
 
 
-export default function List({item}) {
+export default function List({item, setSearchResults, SetSearchQuery}) {
     const navigate = useNavigate();
 
     const redirectPage= (id)=>{
         navigate(`/user/${id}`)
-        console.log(id)
+        setSearchResults([])
+        SetSearchQuery("")
     }
 
     return (
