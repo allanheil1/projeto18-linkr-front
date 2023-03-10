@@ -31,6 +31,7 @@ export default function SignInPage(){
 		 promise.then((res) => {
 		 	setIsLoading(false);
 			localStorage.setItem('token', res.data.token);
+			localStorage.setItem('photo', res.data.photo);
 		 	navigate("/timeline");
 		});
 		 promise.catch((err) => {
