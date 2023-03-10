@@ -33,61 +33,61 @@ function Posts(props) {
     SetSearchQuery(name);
   };
 
-  useEffect(()=>{
-    let Likes=async()=>{
-      try {
-        setIsLoading(true);
-        const res = await getLikes(postId,token);
-        setQLikes(res);
-        console.log(res);
-        setIsLoading(false);
-      } catch (err) {
-        console.log(err)
-        setIsLoading(false);
-      }
-    }
-    Likes();
-  },[]);
+  // useEffect(()=>{
+  //   let Likes=async()=>{
+  //     try {
+  //       setIsLoading(true);
+  //       const res = await getLikes(postId,token);
+  //       setQLikes(res);
+  //       console.log(res);
+  //       setIsLoading(false);
+  //     } catch (err) {
+  //       console.log(err)
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   Likes();
+  // },[]);
 
-  useEffect((like) => {
-    if (isLiked) {
-      const giveLike = async () => {
-        try {
-          const res = await giveALike(postId, token);
-          //likes();
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    } else {
-      const takeLike = async () => {
-        try {
-          const res = await takeALike(postId, token);
-          //Likes();
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    }
-  },[]);
+  // useEffect((like) => {
+  //   if (isLiked) {
+  //     const giveLike = async () => {
+  //       try {
+  //         const res = await giveALike(postId, token);
+  //         //likes();
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     }
+  //   } else {
+  //     const takeLike = async () => {
+  //       try {
+  //         const res = await takeALike(postId, token);
+  //         //Likes();
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     }
+  //   }
+  // },[]);
 
-  function like() {
-    if(isLiked){
-      setIsLiked(!isLiked);
-      setQLikes(qLikes-1);
-    }else{
-      setIsLiked(!isLiked);
-      setQLikes(qLikes+1);
-    }
-  }
+  // function like() {
+  //   if(isLiked){
+  //     setIsLiked(!isLiked);
+  //     setQLikes(qLikes-1);
+  //   }else{
+  //     setIsLiked(!isLiked);
+  //     setQLikes(qLikes+1);
+  //   }
+  // }
 
   return (
     <S.Container data-test="post">
       <S.Content>
         <S.ProfilePic>
           <img src={photo} alt="" />
-          {isLiked ? <AiFillHeart onClick={like} /> : <AiOutlineHeart onClick={like} />}
-          <S.Like>{qLikes} likes</S.Like>
+          {/* {isLiked ? <AiFillHeart onClick={like} /> : <AiOutlineHeart onClick={like} />}
+          <S.Like>{qLikes} likes</S.Like> */}
         </S.ProfilePic>
         <S.PostContent>
           <S.PostHeader>
