@@ -11,7 +11,7 @@ export default function List({item, setSearchResults, SetSearchQuery}) {
     }
 
     return (
-        <li onClick={()=>redirectPage(item.id)}>
+        <li data-test="user-search" onClick={()=>redirectPage(item.id)}>
             <div>
                 <img src={item.photo} alt={item.name} />
             </div>
