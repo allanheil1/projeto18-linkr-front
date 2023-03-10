@@ -10,7 +10,7 @@ export default function SignInPage(){
 	const api = axios.create({
 		baseURL: process.env.REACT_APP_BASE_URL // or process.env.BASE_URL if not using CRA
 	  });
-  
+
     const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 	const [signInData, setSignInData] = useState({
@@ -47,7 +47,7 @@ export default function SignInPage(){
 
 	return(
 		<S.AuthenticationPageStyle>
-  
+
 		<S.Title>
 		  <h1>
 			linkr
@@ -56,31 +56,33 @@ export default function SignInPage(){
 			save, share and discover the best links on the web
 		  </h2>
 		</S.Title>
-  
+
 		<S.Form onSubmit={SignInRequest}>
-		  <input 
+		  <input
+			data-test="email"
 			type='email' placeholder='email'
 			value={signInData.email} name='email'
 			onChange={OnChange} required
 			disabled={isLoading}
 		  />
-		  <input 
+		  <input
+			data-test="password"
 			type='password' placeholder='password'
 			value={signInData.password} name='password'
 			onChange={OnChange} required
 			disabled={isLoading}
 		  />
-		  <button type='submit' disabled={isLoading}>
+		  <button data-test="login-btn" type='submit' disabled={isLoading}>
 				Log In
 		  </button>
-  
-		  <Link to={isLoading ? '' : '/sign-up'}>
+
+		  <Link data-test="sign-up-link" to={isLoading ? '' : '/sign-up'}>
 			<S.Message>
 				First time? Create an account!
 			</S.Message>
 		  </Link>
 		</S.Form>
-  
+
 	  </S.AuthenticationPageStyle>
 	  );
 }
