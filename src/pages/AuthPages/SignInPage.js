@@ -8,7 +8,7 @@ import * as S from './style';
 export default function SignInPage(){
 
 	const api = axios.create({
-		baseURL: process.env.REACT_APP_BASE_URL // or process.env.BASE_URL if not using CRA
+		baseURL: process.env.REACT_APP_API_URL // or process.env.BASE_URL if not using CRA
 	  });
 
     const navigate = useNavigate();
