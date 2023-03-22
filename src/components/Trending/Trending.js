@@ -3,7 +3,7 @@ import { StyleMargin, StyleTrending, trendingStyle } from "./styles";
 import { trendingHashtags } from "../../service";
 import { Link } from "react-router-dom";
 
-export default function Trending({refresh}) {
+export default function Trending({refresh, setRefresh}) {
     const [trending, setTrending] = useState([])
     const token = localStorage.getItem('token')
     useEffect(() => {
@@ -24,7 +24,7 @@ export default function Trending({refresh}) {
                 <div></div>
                 {trending.map(t => (<h3>
                     <Link to={`/hashtag/${t.name}`} style={trendingStyle}>
-                        <h2 data-test="hashtag">#{t.name}</h2>
+                        <h2 data-test="hashtag" onClick={() => setRefresh(true)}>#{t.name}</h2>
                     </Link>
                 </h3>
                 ))}

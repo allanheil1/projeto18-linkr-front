@@ -12,11 +12,13 @@ export default function TrendingPage() {
     const { hashtag } = useParams()
     const { checkLogin } = useContext(UserContext);
     const [isLoading, setLoading] = useState(false);
+    const [refresh, setRefresh] = useState(false)
     const [hashtagPostsArray, setHashtagPostsArray] = useState([])
 
     useEffect(() => {
         checkLogin();
         const fetchHashtagPosts = async () => {
+            setRefresh(false)
             setLoading(true)
             try {
                 const res = await hashtagPosts(hashtag, token)
@@ -28,14 +30,14 @@ export default function TrendingPage() {
             setLoading(false)
         }
         fetchHashtagPosts()
-        console.log("rodou")
-    }, []);
+    }, [refresh]);
     return (
         <S.Container>
             <Header></Header>
             <S.Content>
                 <h1 data-test="hashtag-title">#{hashtag}</h1>
                 {isLoading? <h1>Loading</h1> : hashtagPostsArray.map((p, i) => <Posts
+                    setRefresh={setRefresh}
                     key={i}
                     id={p.id}
                     postId={p.postId}
@@ -48,7 +50,7 @@ export default function TrendingPage() {
                     urlImage={p.urlImage}
                 />)}
             </S.Content>
-            <Trending></Trending>
+            <Trending setRefresh={setRefresh}></Trending>
         </S.Container>
     )
 }
