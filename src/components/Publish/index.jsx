@@ -27,7 +27,9 @@ function Publish({ setRefresh }) {
       const { url, content } = formState;
       const hashtag = content.match(/#\w+/g);
       await createPost(url, content, token);
-      // await saveHashtag(hashtag, token);
+      for(let i in content){
+        await saveHashtag(hashtag[i], token);
+      }
       setFormState(initialFormState);
       setRefresh((current) => !current);
     } catch (error) {

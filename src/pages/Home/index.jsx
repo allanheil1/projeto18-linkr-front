@@ -75,7 +75,7 @@ function Home() {
           </InfiniteScroll>
         )}
       </S.Content>
-      <Trending></Trending>
+      <Trending refresh={refresh}></Trending>
     </S.Container>
   );
 }

@@ -3,7 +3,7 @@ import { StyleMargin, StyleTrending, trendingStyle } from "./styles";
 import { trendingHashtags } from "../../service";
 import { Link } from "react-router-dom";
 
-export default function Trending() {
+export default function Trending({refresh}) {
     const [trending, setTrending] = useState([])
     const token = localStorage.getItem('token')
     useEffect(() => {
@@ -17,11 +17,9 @@ export default function Trending() {
             }
         }
         fetchTrendings()
-    }, [setTrending])
+    }, [setTrending, refresh])
     return (
-        <StyleTrending>
-            <div className={trending} data-test="trending">
-
+        <StyleTrending data-test="trending">
                 <h1>trending</h1>
                 <div></div>
                 {trending.map(t => (<h3>
@@ -30,8 +28,6 @@ export default function Trending() {
                     </Link>
                 </h3>
                 ))}
-            </div>
-
         </StyleTrending>
     )
 }

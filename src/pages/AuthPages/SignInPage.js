@@ -5,10 +5,11 @@ import axios from 'axios';
 import { UserContext } from '../../contexts/UserContext';
 import * as S from './style';
 
-export default function SignInPage() {
-  const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL // or process.env.BASE_URL if not using CRA
-  });
+export default function SignInPage(){
+
+	const api = axios.create({
+		baseURL: process.env.REACT_APP_API_URL // or process.env.BASE_URL if not using CRA
+	  });
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
