@@ -19,7 +19,8 @@ function Posts(props) {
     urlDescription,
     urlImage,
     setSearchResults,
-    SetSearchQuery
+    SetSearchQuery,
+    setRefresh
   } = props;
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
@@ -80,6 +81,10 @@ function Posts(props) {
   //     setQLikes(qLikes+1);
   //   }
   // }
+  function refreshHashtag(tag){
+    navigate(`/hashtag/${tag.replace("#","")}`)
+    setRefresh(true)
+  }
 
   return (
     <S.Container data-test="post">
@@ -99,7 +104,7 @@ function Posts(props) {
               <TbTrashFilled />
             </S.BySide>
           </S.PostHeader>
-          <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => navigate(`/hashtag/${tag.replace("#","")}`)}>
+          <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => refreshHashtag(tag)}>
             <p data-test="description">{content}</p>
           </ReactTagify>
           <S.Metadata data-test="link" href={url} target="_blank" rel="noopener noreferrer">
