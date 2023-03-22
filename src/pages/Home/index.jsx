@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext, useState, } from 'react';
+import { useContext, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import { UserContext } from '../../contexts/UserContext';
@@ -16,7 +16,7 @@ function Home() {
   const token = localStorage.getItem('token');
   const { checkLogin } = useContext(UserContext);
 
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [posts, setPosts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -24,7 +24,7 @@ function Home() {
 
   const fetchPosts = async () => {
     checkLogin();
-    setLoading(true);
+    if (isLoading === null) setLoading(true);
 
     try {
       const res = await listPost({ token, offset });
@@ -56,11 +56,7 @@ function Home() {
             initialLoad={true}
             loadMore={fetchPosts}
             hasMore={hasMore}
-            loader={
-              <div className="loader" key={0}>
-                Loading ...
-              </div>
-            }
+            loader={<h1>Loading</h1>}
           >
             {posts.map((p) => (
               <Posts

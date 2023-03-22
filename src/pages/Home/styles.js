@@ -22,12 +22,13 @@ export const Content = styled.div`
   @media (max-width: 460px) {
     width: 100%;
   }
-  > h1 {
+   h1 {
     font-family: 'Oswald';
     font-weight: 700;
     font-size: 2.05rem;
     line-height: 49px;
     color: #ffffff;
     margin: 0px 19px 19px;
+    text-align: center;
   }
 `;
