@@ -1,64 +1,78 @@
 import React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
+import InfiniteScroll from 'react-infinite-scroller';
+
 import { UserContext } from '../../contexts/UserContext';
-import * as S from './styles';
-import { useLocation } from 'react-router-dom';
 import { listPost } from '../../service';
+
 import Posts from '../../components/Posts';
 import Publish from '../../components/Publish';
 import Trending from '../../components/Trending/Trending';
 import Header from '../../components/Header/Header';
 
+import * as S from './styles';
+
 function Home() {
-  const location = useLocation();
   const token = localStorage.getItem('token');
-  const isTimelinePage = location.pathname.endsWith('/timeline');
   const { checkLogin } = useContext(UserContext);
-  const [isLoading, setLoading] = useState(false);
+
+  const [isLoading, setLoading] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [offset, setOffset] = useState(0);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      checkLogin();
-      setLoading(true);
-      try {
-        const res = await listPost(token);
-        setPosts(res.data.metadataArray);
-      } catch (error) {
-        console.log(error);
-        alert('An error occured while trying to fetch the posts, please refresh the page');
-      }
+  const fetchPosts = async () => {
+    checkLogin();
+    if (isLoading === null) setLoading(true);
+
+    try {
+      const res = await listPost({ token, offset });
+      const newPosts = res.data.metadataArray;
+
+      if (newPosts.length === 0) setHasMore(false);
+
+      setPosts([...posts, ...newPosts]);
+      setOffset(offset + 10);
+    } catch (error) {
+      console.log(error);
+      alert('An error occurred while trying to fetch the posts, please refresh the page');
+    } finally {
       setLoading(false);
-    };
-    fetchPosts();
-  }, [refresh, token, checkLogin]);
+    }
+  };
 
   return (
     <S.Container>
       <Header />
       <S.Content>
         <h1>Timeline</h1>
-        {isTimelinePage && <Publish setRefresh={setRefresh} />}
-        {isLoading ? (
-          <h1>Loading</h1>
-        ) : posts.length === 0 ? (
-          <h1 data-test="message">There are no posts yet</h1>
-        ) : (
-          posts.map((p, i) => (
-            <Posts
-              key={i}
-              id={p.id}
-              postId={p.postId}
-              name={p.name}
-              photo={p.photo}
-              content={p.content}
-              url={p.url}
-              urlTitle={p.urlTitle}
-              urlDescription={p.urlDescription}
-              urlImage={p.urlImage}
-            />
-          ))
+        <Publish setRefresh={setRefresh} />
+        {isLoading && <h1>Loading</h1>}
+        {!isLoading && posts.length === 0 && <h1 data-test="message">There are no posts yet</h1>}
+        {!isLoading && (
+          <InfiniteScroll
+            pageStart={0}
+            initialLoad={true}
+            loadMore={fetchPosts}
+            hasMore={hasMore}
+            loader={<h1>Loading</h1>}
+          >
+            {posts.map((p) => (
+              <Posts
+                key={p.postId}
+                id={p.id}
+                postId={p.postId}
+                name={p.name}
+                photo={p.photo}
+                content={p.content}
+                url={p.url}
+                urlTitle={p.urlTitle}
+                urlDescription={p.urlDescription}
+                urlImage={p.urlImage}
+              />
+            ))}
+          </InfiniteScroll>
         )}
       </S.Content>
       <Trending refresh={refresh}></Trending>

@@ -42,7 +42,7 @@ function Publish({ setRefresh }) {
   return (
     <S.ContainerPublish data-test="publish-box">
       <S.ProfilePic>
-        <img src={profilePic} alt="Profile pic" />
+        <img src={profilePic} alt="profile pic" />
       </S.ProfilePic>
       <S.ContainerForm>
         <p>What are you going to share today?</p>

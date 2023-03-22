@@ -30,12 +30,14 @@ export const ProfilePic = styled.div`
   width: 10%;
   height: 100%;
   > img {
-    background-color: #101010;
+    background-color: #EFEFEF;
     width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-bottom: 15px;
     cursor: pointer;
+    font-size: 0.9em;
+    text-align: center;
   }
   @media (max-width: 461px) {
     display: none;

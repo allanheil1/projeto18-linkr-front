@@ -85,7 +85,7 @@ function Posts(props) {
     <S.Container data-test="post">
       <S.Content>
         <S.ProfilePic>
-          <img src={photo} alt="" />
+          <img src={photo} alt="profile pic" />
           {/* {isLiked ? <AiFillHeart onClick={like} /> : <AiOutlineHeart onClick={like} />}
           <S.Like>{qLikes} likes</S.Like> */}
         </S.ProfilePic>

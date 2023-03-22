@@ -19,7 +19,7 @@ export default function SignUpPage() {
   });
 
   function SignUpRequest(e) {
-    if(signUpData.email === '' || 
+    if(signUpData.email === '' ||
        signUpData.password === '' ||
        signUpData.username === '' ||
        signUpData.pictureUrl === ''
