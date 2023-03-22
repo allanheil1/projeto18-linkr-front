@@ -7,32 +7,35 @@ import Trending from "../../components/Trending/Trending";
 import { useParams } from "react-router-dom";
 import { hashtagPosts } from "../../service";
 
-export default function TrendingPage(req) {
+export default function TrendingPage() {
     const token = localStorage.getItem('token')
     const { hashtag } = useParams()
     const { checkLogin } = useContext(UserContext);
+    const [isLoading, setLoading] = useState(false);
     const [hashtagPostsArray, setHashtagPostsArray] = useState([])
 
     useEffect(() => {
         checkLogin();
         const fetchHashtagPosts = async () => {
+            setLoading(true)
             try {
                 const res = await hashtagPosts(hashtag, token)
-                setHashtagPostsArray(res.data)
+                setHashtagPostsArray(res.data.metadataArray)
             } catch (err) {
                 console.log(err)
                 alert('An error occured while trying to fetch the hashtag posts, please refresh the page');
             }
+            setLoading(false)
         }
         fetchHashtagPosts()
-    }, [hashtagPostsArray]);
-
+        console.log("rodou")
+    }, []);
     return (
         <S.Container>
             <Header></Header>
             <S.Content>
                 <h1 data-test="hashtag-title">#{hashtag}</h1>
-                {hashtagPostsArray.map((p, i) => <Posts
+                {isLoading? <h1>Loading</h1> : hashtagPostsArray.map((p, i) => <Posts
                     key={i}
                     id={p.id}
                     postId={p.postId}
