@@ -6,7 +6,7 @@ import * as S from './style';
 
 export default function SignUpPage() {
   const api = axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL // or process.env.BASE_URL if not using CRA
+    baseURL: process.env.REACT_APP_API_URL // or process.env.BASE_URL if not using CRA
   });
 
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function SignUpPage() {
   });
 
   function SignUpRequest(e) {
-    if(signUpData.email === '' || 
+    if(signUpData.email === '' ||
        signUpData.password === '' ||
        signUpData.username === '' ||
        signUpData.pictureUrl === ''
