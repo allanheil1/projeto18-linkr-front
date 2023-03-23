@@ -1,8 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-
-import { UserContext } from "../../contexts/UserContext";
 import * as S from './style';
 
 export default function SignInPage(){
