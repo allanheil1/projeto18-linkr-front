@@ -22,7 +22,8 @@ function Posts(props) {
     urlDescription,
     urlImage,
     setSearchResults,
-    SetSearchQuery
+    SetSearchQuery,
+    setRefresh
   } = props;
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
@@ -83,6 +84,10 @@ function Posts(props) {
   //     setQLikes(qLikes+1);
   //   }
   // }
+  function refreshHashtag(tag){
+    navigate(`/hashtag/${tag.replace("#","")}`)
+    setRefresh(true)
+  }
 
   return (
     <>

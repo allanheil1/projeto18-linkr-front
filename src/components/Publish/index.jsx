@@ -27,7 +27,9 @@ function Publish({ setRefresh }) {
       const { url, content } = formState;
       const hashtag = content.match(/#\w+/g);
       await createPost(url, content, token);
-      // await saveHashtag(hashtag, token);
+      for(let i in content){
+        await saveHashtag(hashtag[i], token);
+      }
       setFormState(initialFormState);
       setRefresh((current) => !current);
     } catch (error) {
@@ -40,7 +42,7 @@ function Publish({ setRefresh }) {
   return (
     <S.ContainerPublish data-test="publish-box">
       <S.ProfilePic>
-        <img src={profilePic} alt="Profile pic" />
+        <img src={profilePic} alt="profile pic" />
       </S.ProfilePic>
       <S.ContainerForm>
         <p>What are you going to share today?</p>

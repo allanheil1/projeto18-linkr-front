@@ -12,13 +12,13 @@ const authConfig = (token) => ({
 
 export const createPost = (url, content, token) => api.post('/timeline', {url, content}, authConfig(token));
 
-export const listPost = (token) => api.get('/timeline', authConfig(token));
+export const listPost = ({token, offset}) => api.get(`/timeline?offset=${offset}`, authConfig(token));
 
 export const trendingHashtags = (token) => api.get('/trending', authConfig(token));
 
 export const hashtagPosts = (params, token) => api.get(`/hashtag/${params}`, authConfig(token));
 
-export const saveHashtag = (hashtag, token) => api.post(`/trending`, {hashtag} ,authConfig(token))
+export const saveHashtag = (hashtag, token) => api.post(`/trending`, {hashtag} ,authConfig(token));
 
 export const getLikes= (params)=>api.get(`/likes/${params}`);
 
