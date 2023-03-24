@@ -69,6 +69,7 @@ function Home() {
       const newPosts = res.data.metadataArray;
       setPosts([...newPosts, ...posts]);
     } catch (error) {
+      console.log(error)
     } finally {
       setLoading(false);
     }
