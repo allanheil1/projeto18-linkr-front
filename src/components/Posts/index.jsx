@@ -4,7 +4,7 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { TbTrashFilled } from 'react-icons/tb';
 import { TiPencil } from 'react-icons/ti';
 import { ReactTagify } from 'react-tagify';
-import { getLikes, giveALike, takeALike } from '../../service';
+import { getLikes, likePost, dislikePost } from '../../service';
 import * as S from './styles';
 
 function Posts(props) {
@@ -25,8 +25,26 @@ function Posts(props) {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [qLikes, setQLikes] = useState(0);
+  const [likesCount, setLikesCount] = useState(0);
   const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    async function getPostLikes(){
+      try {
+        setIsLoading(true);
+        const res = await getLikes({token, postId});
+        setLikesCount(res.data.likes);
+        if(res.data.userLiked === true){
+          setIsLiked(true);
+        }
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err)
+        setIsLoading(false);
+      }
+    }
+    getPostLikes();
+  }, []);
 
   const redirectPage = (id) => {
     navigate(`/user/${id}`);
@@ -34,53 +52,26 @@ function Posts(props) {
     SetSearchQuery(name);
   };
 
-  // useEffect(()=>{
-  //   let Likes=async()=>{
-  //     try {
-  //       setIsLoading(true);
-  //       const res = await getLikes(postId,token);
-  //       setQLikes(res);
-  //       console.log(res);
-  //       setIsLoading(false);
-  //     } catch (err) {
-  //       console.log(err)
-  //       setIsLoading(false);
-  //     }
-  //   }
-  //   Likes();
-  // },[]);
+  async function toggleLike() {
+    if(isLiked){
+      setIsLiked(!isLiked);
+      setLikesCount(likesCount-1);
+      try {
+        await dislikePost({token, postId});
+      } catch (error) {
+        console.log(error);
+      }
+    }else{
+      setIsLiked(!isLiked);
+      setLikesCount(likesCount+1);
+      try {
+        await likePost({token, postId});
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 
-  // useEffect((like) => {
-  //   if (isLiked) {
-  //     const giveLike = async () => {
-  //       try {
-  //         const res = await giveALike(postId, token);
-  //         //likes();
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     }
-  //   } else {
-  //     const takeLike = async () => {
-  //       try {
-  //         const res = await takeALike(postId, token);
-  //         //Likes();
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     }
-  //   }
-  // },[]);
-
-  // function like() {
-  //   if(isLiked){
-  //     setIsLiked(!isLiked);
-  //     setQLikes(qLikes-1);
-  //   }else{
-  //     setIsLiked(!isLiked);
-  //     setQLikes(qLikes+1);
-  //   }
-  // }
   function refreshHashtag(tag){
     navigate(`/hashtag/${tag.replace("#","")}`)
     setRefresh(true)
@@ -91,8 +82,8 @@ function Posts(props) {
       <S.Content>
         <S.ProfilePic>
           <img src={photo} alt="profile pic" />
-          {/* {isLiked ? <AiFillHeart onClick={like} /> : <AiOutlineHeart onClick={like} />}
-          <S.Like>{qLikes} likes</S.Like> */}
+          {isLiked ? <AiFillHeart color='red' onClick={toggleLike}/> : <AiOutlineHeart onClick={toggleLike}/>}
+          {<S.Like>{likesCount === 1 ? `${likesCount} like` : `${likesCount} likes`}</S.Like>}
         </S.ProfilePic>
         <S.PostContent>
           <S.PostHeader>
