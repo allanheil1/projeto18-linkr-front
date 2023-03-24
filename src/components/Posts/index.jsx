@@ -188,7 +188,7 @@ function Posts(props) {
           </S.Content>
         </S.Container>
       { modalOpen &&
-        <Modal setModalOpen={setModalOpen}>
+        <DeleteModal setModalOpen={setModalOpen}>
           <p>Are you sure you want to delete this post?</p>
           <div>
               <button
@@ -206,7 +206,7 @@ function Posts(props) {
                   {deletingPost ? "Deleting ..." : "Yes, delete it"}
               </button>
           </div>
-        </Modal>
+        </DeleteModal>
       }
 
       {open ? (
