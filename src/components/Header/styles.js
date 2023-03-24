@@ -61,6 +61,7 @@ const SearcheStyle = styled.div`
                 border-radius: 50%;
                 img{
                     width: 100%;
+                    border-radius: 50%;
                 }
             }
         }
