@@ -4,7 +4,7 @@ import { AiOutlineDown, AiOutlineSearch, AiOutlineUp } from "react-icons/ai"
 import DebounceInput from 'react-debounce-input';
 import axios from "axios"
 import * as S from "./styles.js"
-import List from "./List.js";
+import List from "./List.jsx";
 
  
 export default function Header() {

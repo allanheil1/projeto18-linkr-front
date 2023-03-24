@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { AiOutlineHeart, AiFillHeart, AiOutlineComment } from 'react-icons/ai';
+import { GoGitCompare } from 'react-icons/go';
+import { BsSend } from 'react-icons/bs';
 import { TbTrashFilled } from 'react-icons/tb';
 import { TiPencil } from 'react-icons/ti';
 import { ReactTagify } from 'react-tagify';
 import { getLikes, likePost, dislikePost } from '../../service';
 import * as S from './styles';
+import Modal from '../Modal/Modal';
 
 function Posts(props) {
+  const [open, setOpen] = useState(false);
   const {
     id,
     postId,
@@ -29,17 +33,17 @@ function Posts(props) {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    async function getPostLikes(){
+    async function getPostLikes() {
       try {
         setIsLoading(true);
-        const res = await getLikes({token, postId});
+        const res = await getLikes({ token, postId });
         setLikesCount(res.data.likes);
-        if(res.data.userLiked === true){
+        if (res.data.userLiked === true) {
           setIsLiked(true);
         }
         setIsLoading(false);
       } catch (err) {
-        console.log(err)
+        console.log(err);
         setIsLoading(false);
       }
     }
@@ -53,62 +57,105 @@ function Posts(props) {
   };
 
   async function toggleLike() {
-    if(isLiked){
+    if (isLiked) {
       setIsLiked(!isLiked);
-      setLikesCount(likesCount-1);
+      setLikesCount(likesCount - 1);
       try {
-        await dislikePost({token, postId});
+        await dislikePost({ token, postId });
       } catch (error) {
         console.log(error);
       }
-    }else{
+    } else {
       setIsLiked(!isLiked);
-      setLikesCount(likesCount+1);
+      setLikesCount(likesCount + 1);
       try {
-        await likePost({token, postId});
+        await likePost({ token, postId });
       } catch (error) {
         console.log(error);
       }
     }
   }
 
-  function refreshHashtag(tag){
-    navigate(`/hashtag/${tag.replace("#","")}`)
-    setRefresh(true)
+  function refreshHashtag(tag) {
+    navigate(`/hashtag/${tag.replace('#', '')}`);
+    setRefresh(true);
   }
 
   return (
-    <S.Container data-test="post">
-      <S.Content>
-        <S.ProfilePic>
-          <img src={photo} alt="profile pic" />
-          {isLiked ? <AiFillHeart color='red' onClick={toggleLike}/> : <AiOutlineHeart onClick={toggleLike}/>}
-          {<S.Like>{likesCount === 1 ? `${likesCount} like` : `${likesCount} likes`}</S.Like>}
-        </S.ProfilePic>
-        <S.PostContent>
-          <S.PostHeader>
-            <h3 data-test="username" onClick={() => redirectPage(id)}>
-              {name}
-            </h3>
-            <S.BySide>
-              <TiPencil />
-              <TbTrashFilled />
-            </S.BySide>
-          </S.PostHeader>
-          <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => refreshHashtag(tag)}>
-            <p data-test="description">{content}</p>
-          </ReactTagify>
-          <S.Metadata data-test="link" href={url} target="_blank" rel="noopener noreferrer">
-            <div>
-              <h3>{urlTitle}</h3>
-              <p> {urlDescription}</p>
+    <>
+      <S.Container data-test="post">
+        <S.Content>
+          <S.ProfilePic>
+            <img src={photo} alt="" />
+            <img src={photo} alt="profile pic" />
+            {isLiked ? <AiFillHeart color="red" onClick={toggleLike} /> : <AiOutlineHeart onClick={toggleLike} />}
+            {<S.Like>{likesCount === 1 ? `${likesCount} like` : `${likesCount} likes`}</S.Like>}
+            <div onClick={() => setOpen(!open)}>
+              <AiOutlineComment fontSize={23} />
+              209
             </div>
-            <img src={urlImage} alt="" />
-          </S.Metadata>
-        </S.PostContent>
-      </S.Content>
-    </S.Container>
+            <div>
+              <GoGitCompare fontSize={21} />
+              176
+            </div>
+          </S.ProfilePic>
+          <S.PostContent>
+            <S.PostHeader>
+              <h3 data-test="username" onClick={() => redirectPage(id)}>
+                {name}
+              </h3>
+              <S.BySide>
+                <TiPencil />
+                <TbTrashFilled />
+              </S.BySide>
+            </S.PostHeader>
+            <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => refreshHashtag(tag)}>
+              <p data-test="description">{content}</p>
+            </ReactTagify>
+            <S.Metadata data-test="link" href={url} target="_blank" rel="noopener noreferrer">
+              <div>
+                <h3>{urlTitle}</h3>
+                <p> {urlDescription}</p>
+              </div>
+              <img src={urlImage} alt="" />
+            </S.Metadata>
+          </S.PostContent>
+        </S.Content>
+      </S.Container>
+      {open ? (
+        <S.Comment>
+          <ul>
+            <li>
+              <S.UserImg>
+                <img src="aquiMinhaImagem" alt="Eu" />
+              </S.UserImg>
+              <div>
+                <S.UserConteiner>
+                  <p>Name</p>
+                  <div>
+                    <spam></spam>following
+                  </div>
+                </S.UserConteiner>
+                <div>Aqui está meu cooomentario</div>
+              </div>
+            </li>
+          </ul>
+          <S.Input>
+            <S.UserImg>
+              <img src="imagem" alt="eu" />
+            </S.UserImg>
+            <S.InputComment>
+              <input type="text" placeholder="write a comment..." />
+              <p>
+                <BsSend fontSize={20} />
+              </p>
+            </S.InputComment>
+          </S.Input>
+        </S.Comment>
+      ) : (
+        ''
+      )}
+    </>
   );
 }
-
 export default Posts;
