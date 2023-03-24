@@ -28,5 +28,6 @@ export const saveHashtag = (hashtag, token) => api.post(`/trending`, { hashtag }
 export const getLikes = ({ token, postId }) => api.get(`/likes/${postId}`, authConfig(token));
 
 export const likePost = ({ token, postId }) => api.post(`/like/${postId}`, null, authConfig(token));
+export const dislikePost = ({token, postId}) => api.post(`/dislike/${postId}`, null, authConfig(token));
 
-export const dislikePost = ({ token, postId }) => api.post(`/dislike/${postId}`, null, authConfig(token));
+export const deletePost = ({token, postId}) => api.delete(`/post/${postId}`, authConfig(token));

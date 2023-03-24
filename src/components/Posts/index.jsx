@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import DeleteModal from './utils/Modal';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart, AiOutlineComment } from 'react-icons/ai';
 import { GoGitCompare } from 'react-icons/go';
@@ -6,9 +7,9 @@ import { BsSend } from 'react-icons/bs';
 import { TbTrashFilled } from 'react-icons/tb';
 import { TiPencil } from 'react-icons/ti';
 import { ReactTagify } from 'react-tagify';
-import { getLikes, likePost, dislikePost } from '../../service';
+import { getLikes, likePost, dislikePost, deletePost } from '../../service';
 import * as S from './styles';
-import Modal from '../Modal/Modal';
+import CommentModal from '../Modal/Modal';
 import axios from 'axios';
 
 function Posts(props) {
@@ -32,6 +33,8 @@ function Posts(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const [comment, setComment] = useState()
+  const [modalOpen, setModalOpen] = useState(false);
+  const [deletingPost, setDeletingPost] = useState(false)
   const token = localStorage.getItem('token');
   const Userphoto = localStorage.getItem('photo');
   const Url = process.env.REACT_APP_API_URL
@@ -80,6 +83,48 @@ function Posts(props) {
     }
   }
 
+  function toggleModal(){
+    if(modalOpen){
+      setModalOpen(false);
+    }else{
+      setModalOpen(true);
+    }
+  }
+
+  async function deletePostFromDb(postId) {
+
+    setDeletingPost(true);
+    try{
+      await deletePost({token, postId});
+    } catch (err) {
+      console.log(err)
+      alert("Can't delete post")
+    }
+    setDeletingPost(false)
+    setModalOpen(false);
+  }
+
+  function toggleModal(){
+    if(modalOpen){
+      setModalOpen(false);
+    }else{
+      setModalOpen(true);
+    }
+  }
+
+  async function deletePostFromDb(postId) {
+
+    setDeletingPost(true);
+    try{
+      await deletePost({token, postId});
+    } catch (err) {
+      console.log(err)
+      alert("Can't delete post")
+    }
+    setDeletingPost(false)
+    setModalOpen(false);
+  }
+
   function refreshHashtag(tag) {
     navigate(`/hashtag/${tag.replace('#', '')}`);
     setRefresh(true);
@@ -105,12 +150,12 @@ function Posts(props) {
   return (
     <>
       <S.Container data-test="post">
-        <S.Content>
-          <S.ProfilePic>
-            <img src={photo} alt="profile pic" />
-            {isLiked ? <AiFillHeart color="red" onClick={toggleLike} /> : <AiOutlineHeart onClick={toggleLike} />}
-            {<S.Like>{likesCount === 1 ? `${likesCount} like` : `${likesCount} likes`}</S.Like>}
-            <div onClick={() => setOpen(!open)}>
+          <S.Content>
+            <S.ProfilePic>
+              <img src={photo} alt="profile pic" />
+              {isLiked ? <AiFillHeart color="red" onClick={toggleLike} /> : <AiOutlineHeart onClick={toggleLike} />}
+              {<S.Like>{likesCount === 1 ? `${likesCount} like` : `${likesCount} likes`}</S.Like>}
+              <div onClick={() => setOpen(!open)}>
               <AiOutlineComment fontSize={23} />
               209
             </div>
@@ -119,29 +164,51 @@ function Posts(props) {
               176
             </div>
           </S.ProfilePic>
-          <S.PostContent>
-            <S.PostHeader>
-              <h3 data-test="username" onClick={() => redirectPage(id)}>
-                {name}
-              </h3>
-              <S.BySide>
-                <TiPencil />
-                <TbTrashFilled />
-              </S.BySide>
-            </S.PostHeader>
-            <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => refreshHashtag(tag)}>
-              <p data-test="description">{content}</p>
-            </ReactTagify>
-            <S.Metadata data-test="link" href={url} target="_blank" rel="noopener noreferrer">
-              <div>
-                <h3>{urlTitle}</h3>
-                <p> {urlDescription}</p>
-              </div>
-              <img src={urlImage} alt="metadata image" />
-            </S.Metadata>
-          </S.PostContent>
-        </S.Content>
-      </S.Container>
+            <S.PostContent>
+              <S.PostHeader>
+                <h3 data-test="username" onClick={() => redirectPage(id)}>
+                  {name}
+                </h3>
+                <S.BySide>
+                  <TiPencil />
+                  <TbTrashFilled onClick={() => toggleModal()}/>
+                </S.BySide>
+              </S.PostHeader>
+              <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => refreshHashtag(tag)}>
+                <p data-test="description">{content}</p>
+              </ReactTagify>
+              <S.Metadata data-test="link" href={url} target="_blank" rel="noopener noreferrer">
+                <div>
+                  <h3>{urlTitle}</h3>
+                  <p> {urlDescription}</p>
+                </div>
+                <img src={urlImage} alt="metadata image" />
+              </S.Metadata>
+            </S.PostContent>
+          </S.Content>
+        </S.Container>
+      { modalOpen &&
+        <DeleteModal setModalOpen={setModalOpen}>
+          <p>Are you sure you want to delete this post?</p>
+          <div>
+              <button
+                  data-test="cancel"
+                  onClick={() => {setModalOpen(false)}}
+                  disabled={deletingPost}>
+                  No, go back
+              </button>
+              <button
+                  data-test="confirm"
+                  onClick={() => {
+                    deletePostFromDb(postId);
+                  }}
+                  disabled={deletingPost}>
+                  {deletingPost ? "Deleting ..." : "Yes, delete it"}
+              </button>
+          </div>
+        </DeleteModal>
+      }
+
       {open ? (
         <S.Comment>
           <ul>
