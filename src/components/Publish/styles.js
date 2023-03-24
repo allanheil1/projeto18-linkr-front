@@ -5,7 +5,6 @@ export const ContainerPublish = styled.div`
   background-color: white;
   width: 611px;
   height: 209px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
   padding-top: 19px;
   box-shadow: 4px 4px 8px 0px rgba(180, 180, 207, 0.2);
