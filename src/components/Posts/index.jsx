@@ -9,6 +9,7 @@ import { ReactTagify } from 'react-tagify';
 import { getLikes, likePost, dislikePost } from '../../service';
 import * as S from './styles';
 import Modal from '../Modal/Modal';
+import axios from 'axios';
 
 function Posts(props) {
   const [open, setOpen] = useState(false);
@@ -30,7 +31,10 @@ function Posts(props) {
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
+  const [comment, setComment] = useState()
   const token = localStorage.getItem('token');
+  const Userphoto = localStorage.getItem('photo');
+  const Url = process.env.REACT_APP_API_URL
 
   useEffect(() => {
     async function getPostLikes() {
@@ -81,12 +85,28 @@ function Posts(props) {
     setRefresh(true);
   }
 
+  async function postComment(postId){
+    const body = {
+      postId,
+      content: comment
+    };
+
+    try {
+      const authConfig = (token) => ({
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      await axios.post(`${Url}/comment`, body, authConfig(token));
+      setComment("")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <S.Container data-test="post">
         <S.Content>
           <S.ProfilePic>
-            <img src={photo} alt="" />
             <img src={photo} alt="profile pic" />
             {isLiked ? <AiFillHeart color="red" onClick={toggleLike} /> : <AiOutlineHeart onClick={toggleLike} />}
             {<S.Like>{likesCount === 1 ? `${likesCount} like` : `${likesCount} likes`}</S.Like>}
@@ -142,12 +162,12 @@ function Posts(props) {
           </ul>
           <S.Input>
             <S.UserImg>
-              <img src="imagem" alt="eu" />
+              <img src={Userphoto} alt="eu" />
             </S.UserImg>
             <S.InputComment>
-              <input type="text" placeholder="write a comment..." />
+              <input type="text" placeholder="write a comment..." value={comment} onChange={(e)=> setComment(e.target.value)}/>
               <p>
-                <BsSend fontSize={20} />
+                <BsSend fontSize={20} onClick={()=>postComment(postId)} />
               </p>
             </S.InputComment>
           </S.Input>

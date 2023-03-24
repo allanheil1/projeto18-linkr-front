@@ -158,6 +158,10 @@ export const UserImg = styled.div`
   height: 40px;
   border-radius: 50%;
   background-color: red;
+  img{
+    width: 100%;
+    border-radius: 50%;
+  }
 `
 export const UserConteiner = styled.div`
   display: flex;
