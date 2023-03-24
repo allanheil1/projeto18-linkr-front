@@ -1,6 +1,6 @@
 import { ModalStyle, Wrapper } from "./style";
 
-export default function Modal(props) {
+export default function DeleteModal(props) {
     return (
         <Wrapper
             onClick={() => {props.setModalOpen(false)}}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Modal from './utils/Modal';
+import DeleteModal from './utils/Modal';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart, AiOutlineComment } from 'react-icons/ai';
 import { GoGitCompare } from 'react-icons/go';
@@ -9,7 +9,7 @@ import { TiPencil } from 'react-icons/ti';
 import { ReactTagify } from 'react-tagify';
 import { getLikes, likePost, dislikePost, deletePost } from '../../service';
 import * as S from './styles';
-import Modal from '../Modal/Modal';
+import CommentModal from '../Modal/Modal';
 import axios from 'axios';
 
 function Posts(props) {

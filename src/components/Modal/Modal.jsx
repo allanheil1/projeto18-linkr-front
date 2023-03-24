@@ -1,6 +1,6 @@
 import * as S from "./style.js"
 
-export default function Modal(){
+export default function CommentModal(){
     return(
         <S.ConteinerModal>
             <S.Modal>
