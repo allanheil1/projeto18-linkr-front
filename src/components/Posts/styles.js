@@ -5,7 +5,7 @@ export const Container = styled.div`
   width: 100vw;
   height: 232px;
   background: #171717;
-  margin: 16px 0px;
+  margin-top: 16px;
   padding-top: 9px;
   font-family: 'Lato';
   border-radius: 16px;
@@ -24,10 +24,17 @@ export const Content = styled.div`
 export const ProfilePic = styled.div`
   display: flex;
   flex-direction: column;
+  gap:10px;
   align-items: center;
   width: 10%;
   height: 100%;
   color: white;
+  div{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+  }
   @media (max-width: 461px) {
     width: 15%;
   }
@@ -121,3 +128,76 @@ export const tagStyle = {
   cursor: 'pointer',
   fontWeight: 'bold'
 }
+
+export const Comment = styled.div` 
+  position: relative;
+  width: 100%;
+  border-radius:0px 0px 16px 16px ;
+  background: #1E1E1E;
+  margin-bottom: 16px;
+  padding: 13px 25px;
+  ul{
+    display: flex;
+    flex-direction: column-reverse;
+    height: auto;
+    padding-bottom:40px ;
+    max-height: 300px;
+    overflow-x: hidden;
+    li{
+    display: flex;
+    gap: 14px;
+    margin: 14px 0px;
+    padding: 8px 0px;
+    border-bottom: 1px solid #353535;
+  }
+  }
+  
+`
+export const UserImg = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: red;
+  img{
+    width: 100%;
+    border-radius: 50%;
+  }
+`
+export const UserConteiner = styled.div`
+  display: flex;
+  gap: 12px;
+`
+export const Input = styled.div` 
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  padding: 8px;
+  position: absolute;
+  bottom: 2px;
+  left: 0px;
+  div{
+    border-radius: 50%;
+    img{
+      width: 100%;
+    }
+  }
+`
+export const InputComment = styled.div` 
+  width: 510px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  input{
+    width: 510px;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+    padding:0px 8px ;
+  }
+  p{
+    position: absolute;
+    right: 8px;
+  }
+`
+

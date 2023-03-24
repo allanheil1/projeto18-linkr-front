@@ -1,13 +1,14 @@
-import Header from '../../components/Header/Header.js';
+import Header from '../../components/Header/Header.jsx';
 import { useState, useEffect } from 'react';
 import * as S from './styles.js';
 import { AiOutlineSearch } from 'react-icons/ai';
 import DebounceInput from 'react-debounce-input';
 import axios from 'axios';
 import Posts from '../../components/Posts/index.jsx';
-import List from '../../components/Header/List.js';
+import List from '../../components/Header/List.jsx';
 import { useParams } from 'react-router-dom';
 import Trending from '../../components/Trending/Trending.js';
+import Modal from '../../components/Modal/Modal.jsx';
 
 export default function UserPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -60,7 +61,7 @@ export default function UserPage() {
         }
     }, [id]);
     return (
-        <S.ConteinerUserPage>
+        <S.ConteinerUserPage> 
             <Header />
             <S.SearcheStyle>
                 <DebounceInput
