@@ -112,7 +112,7 @@ function Posts(props) {
               <h3>{urlTitle}</h3>
               <p> {urlDescription}</p>
             </div>
-            <img src={urlImage} alt="" />
+            <img src={urlImage} alt="metadata image" />
           </S.Metadata>
         </S.PostContent>
       </S.Content>

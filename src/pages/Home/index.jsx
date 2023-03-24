@@ -1,9 +1,10 @@
 import React from 'react';
 import { useContext, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
+import useInterval from 'use-interval';
 
 import { UserContext } from '../../contexts/UserContext';
-import { listPost } from '../../service';
+import { listPost, countNewPosts } from '../../service';
 
 import Posts from '../../components/Posts';
 import Publish from '../../components/Publish';
@@ -21,6 +22,7 @@ function Home() {
   const [posts, setPosts] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(0);
+  const [newPostsCount, setNewPostsCount] = useState(0);
 
   const fetchPosts = async () => {
     checkLogin();
@@ -29,6 +31,7 @@ function Home() {
     try {
       const res = await listPost({ token, offset });
       const newPosts = res.data.metadataArray;
+      console.log(newPosts[0].createdAt, newPosts[3].createdAt);
 
       if (newPosts.length === 0) setHasMore(false);
 
@@ -41,6 +44,15 @@ function Home() {
       setLoading(false);
     }
   };
+
+  // const checkNewPosts = async () => {
+  //   const lastPostCreatedAt = posts[0].createdAt;
+  //   console.log({ lastPostCreatedAt });
+  //   const res = await countNewPosts({ token, lastPostCreatedAt });
+  //   setNewPostsCount(res.data);
+  // };
+
+  // useInterval(checkNewPosts, 15000);
 
   return (
     <S.Container>
