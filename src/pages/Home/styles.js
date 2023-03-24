@@ -32,3 +32,26 @@ export const Content = styled.div`
     text-align: center;
   }
 `;
+
+export const NewPostsBtn = styled.div`
+width: 100%;
+height: 68px;
+display: flex;
+align-items: center;
+gap: 10px;
+justify-content: center;
+cursor: pointer;
+background: #1877F2;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+border-radius: 16px;
+margin-top: 40px;
+
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+color: #FFFFFF;
+
+>div {
+  font-size: 1.5em;
+}
+`
