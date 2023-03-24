@@ -14,8 +14,10 @@ export const createPost = (url, content, token) => api.post('/timeline', { url, 
 
 export const listPost = ({ token, offset }) => api.get(`/timeline?offset=${offset}`, authConfig(token));
 
+export const listNewPost = ({ token, limit }) => api.get(`/timeline?limit=${limit}`, authConfig(token));
+
 export const countNewPosts = ({ token, lastPostCreatedAt }) =>
-  api.get(`/timeline/posts/lastPostCreatedAt=${lastPostCreatedAt}`, authConfig(token));
+  api.get(`/timeline/posts/${lastPostCreatedAt}`, authConfig(token));
 
 export const trendingHashtags = (token) => api.get('/trending', authConfig(token));
 
@@ -23,10 +25,8 @@ export const hashtagPosts = (params, token) => api.get(`/hashtag/${params}`, aut
 
 export const saveHashtag = (hashtag, token) => api.post(`/trending`, { hashtag }, authConfig(token));
 
-export const getLikes = (params) => api.get(`/likes/${params}`);
+export const getLikes = ({ token, postId }) => api.get(`/likes/${postId}`, authConfig(token));
 
-export const getLikes = ({token, postId}) => api.get(`/likes/${postId}`, authConfig(token));
+export const likePost = ({ token, postId }) => api.post(`/like/${postId}`, null, authConfig(token));
 
-export const likePost = ({token, postId}) => api.post(`/like/${postId}`, null, authConfig(token));
-
-export const dislikePost = ({token, postId}) => api.post(`/dislike/${postId}`, null, authConfig(token));
+export const dislikePost = ({ token, postId }) => api.post(`/dislike/${postId}`, null, authConfig(token));
