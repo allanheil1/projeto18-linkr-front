@@ -3,6 +3,7 @@ import DeleteModal from './utils/Modal';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart, AiOutlineComment } from 'react-icons/ai';
 import { GoGitCompare } from 'react-icons/go';
+import { BiRepost } from 'react-icons/bi';
 import { BsSend } from 'react-icons/bs';
 import { TbTrashFilled } from 'react-icons/tb';
 import { TiPencil } from 'react-icons/ti';
@@ -140,7 +141,7 @@ function Posts(props) {
               209
             </div>
             <div>
-              <GoGitCompare fontSize={21} />
+              <BiRepost fontSize={21} />
               176
             </div>
           </S.ProfilePic>
