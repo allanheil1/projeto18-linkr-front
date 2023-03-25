@@ -26,7 +26,7 @@ function Posts(props) {
     urlImage,
     setSearchResults,
     SetSearchQuery,
-    setRefresh
+    setRefresh 
   } = props;
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
@@ -36,8 +36,10 @@ function Posts(props) {
   const [modalOpen, setModalOpen] = useState(false);
   const [deletingPost, setDeletingPost] = useState(false)
   const token = localStorage.getItem('token');
+  const secretKey = process.env.SECRET_KEY;
   const Userphoto = localStorage.getItem('photo');
-  const Url = process.env.REACT_APP_API_URL
+  const Url = process.env.REACT_APP_API_URL;
+  const [isPostFromLoggedUser, setIsPostFromLoggedUser] = useState(false);
 
   useEffect(() => {
     async function getPostLikes() {
@@ -102,27 +104,7 @@ function Posts(props) {
     }
     setDeletingPost(false)
     setModalOpen(false);
-  }
-
-  function toggleModal(){
-    if(modalOpen){
-      setModalOpen(false);
-    }else{
-      setModalOpen(true);
-    }
-  }
-
-  async function deletePostFromDb(postId) {
-
-    setDeletingPost(true);
-    try{
-      await deletePost({token, postId});
-    } catch (err) {
-      console.log(err)
-      alert("Can't delete post")
-    }
-    setDeletingPost(false)
-    setModalOpen(false);
+    window.location.href = window.location.href;
   }
 
   function refreshHashtag(tag) {
