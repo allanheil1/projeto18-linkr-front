@@ -103,6 +103,7 @@ function Posts(props) {
       await deletePost({token, postId});
     } catch (err) {
       console.log(err)
+      setModalOpen(false);
       alert("Can't delete post")
     }
     setDeletingPost(false)
