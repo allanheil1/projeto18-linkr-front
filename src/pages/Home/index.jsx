@@ -38,6 +38,7 @@ function Home() {
         return false;
       }
 
+      console.log(newPosts[0].createdAt)
       setPosts([...posts, ...newPosts]);
       setOffset(offset + 10);
     } catch (error) {
@@ -50,7 +51,7 @@ function Home() {
 
   useInterval(() => {
     const checkNewPosts = async () => {
-      const lastPostCreatedAt = posts[0].createdAt;
+      const lastPostCreatedAt = posts[0]?.createdAt || '2022-03-24T23:36:01.957Z';
       try {
         const res = await countNewPosts({ token, lastPostCreatedAt });
         setNewPostsCount(res.data);
@@ -68,6 +69,7 @@ function Home() {
       const res = await listNewPost({ token, limit });
       const newPosts = res.data.metadataArray;
       setPosts([...newPosts, ...posts]);
+      setNewPostsCount(0)
     } catch (error) {
       console.log(error)
     } finally {
