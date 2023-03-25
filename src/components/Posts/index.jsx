@@ -7,7 +7,7 @@ import { BsSend } from 'react-icons/bs';
 import { TbTrashFilled } from 'react-icons/tb';
 import { TiPencil } from 'react-icons/ti';
 import { ReactTagify } from 'react-tagify';
-import { getLikes, likePost, dislikePost, deletePost } from '../../service';
+import { getLikesAndOwnership, likePost, dislikePost, deletePost } from '../../service';
 import * as S from './styles';
 import CommentModal from '../Modal/Modal';
 import axios from 'axios';
@@ -32,6 +32,7 @@ function Posts(props) {
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
+  const [postOwner, setPostOwner] = useState(false);
   const [comment, setComment] = useState()
   const [modalOpen, setModalOpen] = useState(false);
   const [deletingPost, setDeletingPost] = useState(false)
@@ -43,10 +44,14 @@ function Posts(props) {
     async function getPostLikes() {
       try {
         setIsLoading(true);
-        const res = await getLikes({ token, postId });
+        const res = await getLikesAndOwnership({ token, postId });
         setLikesCount(res.data.likes);
-        if (res.data.userLiked === true) {
+        if(res.data.userLiked === true) {
           setIsLiked(true);
+        }
+        console.log(res.data)
+        if(res.data.ownership === true){
+          setPostOwner(true);
         }
         setIsLoading(false);
       } catch (err) {
@@ -150,8 +155,8 @@ function Posts(props) {
                   {name}
                 </h3>
                 <S.BySide>
-                  <TiPencil />
-                  <TbTrashFilled onClick={() => toggleModal()}/>
+                  {postOwner && <TiPencil />}
+                  {postOwner && <TbTrashFilled onClick={() => toggleModal()}/>}
                 </S.BySide>
               </S.PostHeader>
               <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => refreshHashtag(tag)}>
