@@ -24,6 +24,7 @@ function Home() {
   const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(0);
   const [newPostsCount, setNewPostsCount] = useState(0);
+  const followsAnyone = posts[0]?.followsAnyone
 
   const fetchPosts = async () => {
     checkLogin();
@@ -38,7 +39,6 @@ function Home() {
         return false;
       }
 
-      //console.log(newPosts[0].createdAt)
       setPosts([...posts, ...newPosts]);
       setOffset(offset + 10);
     } catch (error) {
@@ -69,9 +69,9 @@ function Home() {
       const res = await listNewPost({ token, limit });
       const newPosts = res.data.metadataArray;
       setPosts([...newPosts, ...posts]);
-      setNewPostsCount(0)
+      setNewPostsCount(0);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -92,7 +92,12 @@ function Home() {
           </S.NewPostsBtn>
         )}
         {isLoading && <h1>Loading</h1>}
-        {!isLoading && posts.length === 0 && <h1 data-test="message">There are no posts yet</h1>}
+        {!isLoading && posts?.length < 1 && !followsAnyone && (
+          <h1 data-test="message">You don't follow anyone yet. Search for new friends!</h1>
+        )}
+        {!isLoading && posts?.length < 1 && followsAnyone && (
+          <h1 data-test="message">No posts found from your friends</h1>
+        )}
         {!isLoading && (
           <InfiniteScroll
             pageStart={0}
