@@ -35,6 +35,15 @@ const ProfileStyle = styled.div`
         font-size: 2.5em;
         color: #fff;
     }
+    button{
+        width: 112px;
+        height: 31px;
+        background: ${props => props.follow ? 'white':'#1877F2'};
+        border-radius: 5px;
+        border: none;
+        color: ${props => !props.follow ? 'white':'#1877F2'};
+        cursor: pointer;
+    }
 `
 const SearcheStyle = styled.div`
     margin-top: 80px;

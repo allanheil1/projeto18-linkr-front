@@ -8,12 +8,16 @@ import Posts from '../../components/Posts/index.jsx';
 import List from '../../components/Header/List.jsx';
 import { useParams } from 'react-router-dom';
 import Trending from '../../components/Trending/Trending.js';
+import Modal from '../../components/Modal/Modal.jsx';
+import { followUser, unfollowUser } from '../../service/index.js';
 
 export default function UserPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [infoUser, setInfoUser] = useState([]);
+  const [follow, setFollow] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(false)
   const { id } = useParams();
   const token = localStorage.getItem('token');
   const url = process.env.REACT_APP_API_URL
@@ -39,9 +43,43 @@ export default function UserPage() {
     setSearchQuery(searchTerm);
   }
 
+  async function followClick(){
+    try{
+        if (!follow){
+            setIsDisabled(true)
+            await followUser({token, id})
+            setFollow(true)
+        } else {
+            setIsDisabled(true)
+            await unfollowUser({token, id})
+            setFollow(false)
+        }
+        setIsDisabled(false)
+    } catch(err){
+        alert(err.message);
+    }
+  }
+
   useEffect(() => {
     setSearchResults(filteredUsers);
   }, [filteredUsers]);
+
+  useEffect(()=> {
+    try {
+        const authConfig = (token) => ({
+            headers: { Authorization: `Bearer ${token}` }
+
+          });
+        const res = axios.get(`${url}/follows/${id}`, authConfig(token));
+        res.then((r) => {
+            setFollow(r.data);
+        }).catch((e) => {
+            console.log(e.message);
+        });
+    } catch (error) {
+        console.log(error.message);
+    }
+  }, [follow])
 
     useEffect(() => {
         try {
@@ -80,11 +118,12 @@ export default function UserPage() {
             <S.ConteinerMain>
                 <div>
                     <div>
-                        <S.ProfileStyle>
+                        <S.ProfileStyle follow={follow}>
                             <span>
                                 <img src={infoUser.photo} alt={infoUser.name} />
                             </span>
                             <h2>jeff’s posts</h2>
+                            {follow !== "same" && <button onClick={followClick} disabled={false}>{follow ? 'Unfollow':'Follow'}</button>}
                         </S.ProfileStyle>
                     </div>
                     {infoUser.map(p => <Posts id={p.id}

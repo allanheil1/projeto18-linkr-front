@@ -38,7 +38,7 @@ function Home() {
         return false;
       }
 
-      console.log(newPosts[0].createdAt)
+      //console.log(newPosts[0].createdAt)
       setPosts([...posts, ...newPosts]);
       setOffset(offset + 10);
     } catch (error) {
