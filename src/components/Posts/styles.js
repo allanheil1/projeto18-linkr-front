@@ -149,6 +149,9 @@ export const Comment = styled.div`
     margin: 14px 0px;
     padding: 8px 0px;
     border-bottom: 1px solid #353535;
+    .comment{
+      color: #fff8fc;
+    }
   }
   }
   
@@ -176,6 +179,9 @@ export const Input = styled.div`
   position: absolute;
   bottom: 2px;
   left: 0px;
+  z-index: 4;
+  background-color:#1E1E1E;
+  border-radius: 16px;
   div{
     border-radius: 50%;
     img{
