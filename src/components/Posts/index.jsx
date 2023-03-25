@@ -36,10 +36,8 @@ function Posts(props) {
   const [modalOpen, setModalOpen] = useState(false);
   const [deletingPost, setDeletingPost] = useState(false)
   const token = localStorage.getItem('token');
-  const secretKey = process.env.SECRET_KEY;
   const Userphoto = localStorage.getItem('photo');
   const Url = process.env.REACT_APP_API_URL;
-  const [isPostFromLoggedUser, setIsPostFromLoggedUser] = useState(false);
 
   useEffect(() => {
     async function getPostLikes() {
