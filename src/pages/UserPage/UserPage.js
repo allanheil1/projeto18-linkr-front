@@ -8,7 +8,6 @@ import Posts from '../../components/Posts/index.jsx';
 import List from '../../components/Header/List.jsx';
 import { useParams } from 'react-router-dom';
 import Trending from '../../components/Trending/Trending.js';
-import Modal from '../../components/Modal/Modal.jsx';
 
 export default function UserPage() {
   const [searchQuery, setSearchQuery] = useState('');
