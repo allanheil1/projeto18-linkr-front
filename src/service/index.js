@@ -31,3 +31,6 @@ export const likePost = ({ token, postId }) => api.post(`/like/${postId}`, null,
 export const dislikePost = ({token, postId}) => api.post(`/dislike/${postId}`, null, authConfig(token));
 
 export const deletePost = ({token, postId}) => api.delete(`/post/${postId}`, authConfig(token));
+
+export const followUser = ({token, id}) => api.post(`/follows/${id}`, null ,authConfig(token));
+export const unfollowUser = ({token, id}) => api.delete(`/follows/${id}`, authConfig(token));
