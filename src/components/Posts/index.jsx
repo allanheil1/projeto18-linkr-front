@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import DeleteModal from './utils/Modal';
+import DeleteModal from './utils/Modal.js';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart, AiOutlineComment } from 'react-icons/ai';
 import { GoGitCompare } from 'react-icons/go';
@@ -9,7 +9,7 @@ import { TiPencil } from 'react-icons/ti';
 import { ReactTagify } from 'react-tagify';
 import { getLikesAndOwnership, likePost, dislikePost, deletePost } from '../../service';
 import * as S from './styles';
-import CommentModal from '../Modal/Modal';
+import CommentModal from '../Modal/Modal.jsx';
 import axios from 'axios';
 
 function Posts(props) {
@@ -38,8 +38,9 @@ function Posts(props) {
   const [deletingPost, setDeletingPost] = useState(false)
   const token = localStorage.getItem('token');
   const Userphoto = localStorage.getItem('photo');
+  const [dataComment, setDataComment] = useState([])
   const Url = process.env.REACT_APP_API_URL;
-
+  console.log(dataComment)
   useEffect(() => {
     async function getPostLikes() {
       try {
@@ -118,7 +119,7 @@ function Posts(props) {
   async function postComment(postId){
     const body = {
       postId,
-      content: comment
+      comment: comment
     };
 
     try {
@@ -127,8 +128,21 @@ function Posts(props) {
       })
       await axios.post(`${Url}/comment`, body, authConfig(token));
       setComment("")
-    } catch (error) {
-      console.log(error)
+      sendComment(postId)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  async function sendComment(id){
+    try {
+      const authConfig = (token) => ({
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      const {data} = await axios.get(`${Url}/comment/${id}`,authConfig(token));
+      setDataComment(data)
+      setOpen(!open)
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -140,9 +154,9 @@ function Posts(props) {
               <img src={photo} alt="profile pic" />
               {isLiked ? <AiFillHeart color="red" onClick={toggleLike} /> : <AiOutlineHeart onClick={toggleLike} />}
               {<S.Like>{likesCount === 1 ? `${likesCount} like` : `${likesCount} likes`}</S.Like>}
-              <div onClick={() => setOpen(!open)}>
+              <div onClick={() => sendComment(postId)}>
               <AiOutlineComment fontSize={23} />
-              209
+              {dataComment.length}
             </div>
             <div>
               <GoGitCompare fontSize={21} />
@@ -197,20 +211,20 @@ function Posts(props) {
       {open ? (
         <S.Comment>
           <ul>
-            <li>
+            {dataComment.map((item)=> <li>
               <S.UserImg>
-                <img src="aquiMinhaImagem" alt="Eu" />
+                <img src={item.photo} alt="Eu" />
               </S.UserImg>
               <div>
                 <S.UserConteiner>
-                  <p>Name</p>
+                  <p>{item.name}</p>
                   <div>
-                    <spam></spam>following
+                    <spam>.</spam>following
                   </div>
                 </S.UserConteiner>
-                <div>Aqui está meu cooomentario</div>
+                <div className='comment'>{item.content}</div>
               </div>
-            </li>
+            </li>)}
           </ul>
           <S.Input>
             <S.UserImg>
