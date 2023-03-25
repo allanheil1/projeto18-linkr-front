@@ -49,7 +49,6 @@ function Posts(props) {
         if(res.data.userLiked === true) {
           setIsLiked(true);
         }
-        console.log(res.data)
         if(res.data.ownership === true){
           setPostOwner(true);
         }
