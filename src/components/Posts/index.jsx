@@ -20,6 +20,8 @@ function Posts(props) {
     name,
     photo,
     content,
+    commentCount,
+    repostCount,
     url,
     urlTitle,
     urlDescription,
@@ -155,11 +157,11 @@ function Posts(props) {
             {<S.Like>{likesCount === 1 ? `${likesCount} like` : `${likesCount} likes`}</S.Like>}
             <div data-test="comment-btn" onClick={() => sendComment(postId)}>
               <AiOutlineComment fontSize={23} />
-              <span data-test="comment-counter">{dataComment.length} comments</span>
+              <span data-test="comment-counter">{commentCount} comments</span>
             </div>
             <div>
               <GoGitCompare fontSize={21} />
-              176
+              <p>{repostCount}</p>
             </div>
           </S.ProfilePic>
           <S.PostContent>

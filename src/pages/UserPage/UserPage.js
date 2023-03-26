@@ -131,6 +131,8 @@ export default function UserPage() {
                         photo={p.photo}
                         postId={p.postId}
                         content={p.content}
+                        commentCount={p.commentCount}
+                        repostCount={p.repostCount}
                         url={p.url}
                         urlTitle={p.urlTitle}
                         urlDescription={p.urlDescription}
