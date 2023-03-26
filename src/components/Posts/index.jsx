@@ -171,7 +171,7 @@ function Posts(props) {
               </h3>
               <S.BySide>
                 {/* {postOwner && <TiPencil />} */}
-                {postOwner && <TbTrashFilled onClick={() => toggleModal()} />}
+                {postOwner && <TbTrashFilled onClick={() => toggleModal()} data-test="delete-btn"/>}
               </S.BySide>
             </S.PostHeader>
             <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => refreshHashtag(tag)}>
