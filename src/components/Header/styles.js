@@ -15,6 +15,7 @@ const ConteinerHeader = styled.div`
     gap: 12px;
     align-items: center;
     h1{
+        cursor: pointer;
         font-family: 'Passion One', cursive;
         font-size: 50px;
         color: #ffff;
