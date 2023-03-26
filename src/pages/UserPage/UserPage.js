@@ -129,6 +129,7 @@ export default function UserPage() {
                     {infoUser.map(p => <Posts id={p.id}
                         name={p.name}
                         photo={p.photo}
+                        postId={p.postId}
                         content={p.content}
                         url={p.url}
                         urlTitle={p.urlTitle}
