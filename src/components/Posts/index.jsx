@@ -26,7 +26,7 @@ function Posts(props) {
     urlImage,
     setSearchResults,
     SetSearchQuery,
-    setRefresh 
+    setRefresh
   } = props;
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
@@ -40,7 +40,7 @@ function Posts(props) {
   const Userphoto = localStorage.getItem('photo');
   const [dataComment, setDataComment] = useState([])
   const Url = process.env.REACT_APP_API_URL;
-  console.log(dataComment)
+ 
   useEffect(() => {
     async function getPostLikes() {
       try {

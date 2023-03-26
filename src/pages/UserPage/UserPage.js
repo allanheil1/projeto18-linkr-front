@@ -98,7 +98,7 @@ export default function UserPage() {
         }
     }, [id]);
     return (
-        <S.ConteinerUserPage> 
+        <S.ConteinerUserPage>
             <Header />
             <S.SearcheStyle>
                 <DebounceInput
@@ -122,7 +122,7 @@ export default function UserPage() {
                             <span>
                                 <img src={infoUser.photo} alt={infoUser.name} />
                             </span>
-                            <h2>jeff’s posts</h2>
+                            <h2>{infoUser[0]?.name}</h2>
                             {follow !== "same" && <button onClick={followClick} disabled={false}>{follow ? 'Unfollow':'Follow'}</button>}
                         </S.ProfileStyle>
                     </div>

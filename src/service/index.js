@@ -16,8 +16,8 @@ export const listPost = ({ token, offset }) => api.get(`/timeline?offset=${offse
 
 export const listNewPost = ({ token, limit }) => api.get(`/timeline?limit=${limit}`, authConfig(token));
 
-export const countNewPosts = ({ token, lastPostCreatedAt }) =>
-  api.get(`/timeline/posts/${lastPostCreatedAt}`, authConfig(token));
+export const countNewPosts = ({ token, lastPostCreatedAt, lastPostId }) =>
+  api.get(`/timeline/posts/${lastPostCreatedAt}?postId=${lastPostId}`, authConfig(token));
 
 export const trendingHashtags = (token) => api.get('/trending', authConfig(token));
 
@@ -29,9 +29,9 @@ export const getLikesAndOwnership = ({ token, postId }) => api.get(`/likes/${pos
 
 export const likePost = ({ token, postId }) => api.post(`/like/${postId}`, null, authConfig(token));
 
-export const dislikePost = ({token, postId}) => api.post(`/dislike/${postId}`, null, authConfig(token));
+export const dislikePost = ({ token, postId }) => api.post(`/dislike/${postId}`, null, authConfig(token));
 
-export const deletePost = ({token, postId}) => api.delete(`/post/${postId}`, authConfig(token));
+export const deletePost = ({ token, postId }) => api.delete(`/post/${postId}`, authConfig(token));
 
-export const followUser = ({token, id}) => api.post(`/follows/${id}`, null ,authConfig(token));
-export const unfollowUser = ({token, id}) => api.delete(`/follows/${id}`, authConfig(token));
+export const followUser = ({ token, id }) => api.post(`/follows/${id}`, null, authConfig(token));
+export const unfollowUser = ({ token, id }) => api.delete(`/follows/${id}`, authConfig(token));
