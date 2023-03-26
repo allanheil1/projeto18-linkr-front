@@ -169,7 +169,7 @@ function Posts(props) {
                   {name}
                 </h3>
                 <S.BySide>
-                  {postOwner && <TiPencil />}
+                  {/* {postOwner && <TiPencil />} */}
                   {postOwner && <TbTrashFilled onClick={() => toggleModal()}/>}
                 </S.BySide>
               </S.PostHeader>

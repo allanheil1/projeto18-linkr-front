@@ -45,7 +45,7 @@ export default function Header() {
     
     return (
         <S.ConteinerHeader>
-            <h1>Linkr</h1>
+            <h1 onClick={() => navigate("/timeline")}>Linkr</h1>
             <S.SearcheStyle>
                 <DebounceInput
                     data-test="search"
