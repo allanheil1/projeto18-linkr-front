@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+export const Geral = styled.div`
+   max-width: 611px;
+   height: auto;
+   background: #171719;
+   border-radius: 18px;
+`;
 export const Container = styled.div`
   max-width: 611px;
   width: 100vw;
@@ -32,8 +38,13 @@ export const ProfilePic = styled.div`
   div{
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 8px;
     font-size: 14px;
+    span{
+      font-size: 10px;
+      font-weight: 700;
+    }
   }
   @media (max-width: 461px) {
     width: 15%;
@@ -169,6 +180,12 @@ export const UserImg = styled.div`
 export const UserConteiner = styled.div`
   display: flex;
   gap: 12px;
+  p{
+    color:#F3F3F3;
+  }
+  div{
+    color:#ACACAC;
+  }
 `
 export const Input = styled.div` 
   display: flex;
@@ -200,6 +217,12 @@ export const InputComment = styled.div`
     border: none;
     border-radius: 8px;
     padding:0px 8px ;
+    background: #252525;
+    color: #575757;
+  }
+  input:focus{
+    outline:initial;
+    color: #fff;
   }
   p{
     position: absolute;

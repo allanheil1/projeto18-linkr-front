@@ -20,6 +20,8 @@ function Posts(props) {
     name,
     photo,
     content,
+    commentCount,
+    repostCount,
     url,
     urlTitle,
     urlDescription,
@@ -33,24 +35,24 @@ function Posts(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const [postOwner, setPostOwner] = useState(false);
-  const [comment, setComment] = useState()
+  const [comment, setComment] = useState();
   const [modalOpen, setModalOpen] = useState(false);
-  const [deletingPost, setDeletingPost] = useState(false)
+  const [deletingPost, setDeletingPost] = useState(false);
   const token = localStorage.getItem('token');
   const Userphoto = localStorage.getItem('photo');
-  const [dataComment, setDataComment] = useState([])
+  const [dataComment, setDataComment] = useState([]);
   const Url = process.env.REACT_APP_API_URL;
- 
+
   useEffect(() => {
     async function getPostLikes() {
       try {
         setIsLoading(true);
         const res = await getLikesAndOwnership({ token, postId });
         setLikesCount(res.data.likes);
-        if(res.data.userLiked === true) {
+        if (res.data.userLiked === true) {
           setIsLiked(true);
         }
-        if(res.data.ownership === true){
+        if (res.data.ownership === true) {
           setPostOwner(true);
         }
         setIsLoading(false);
@@ -88,25 +90,24 @@ function Posts(props) {
     }
   }
 
-  function toggleModal(){
-    if(modalOpen){
+  function toggleModal() {
+    if (modalOpen) {
       setModalOpen(false);
-    }else{
+    } else {
       setModalOpen(true);
     }
   }
 
   async function deletePostFromDb(postId) {
-
     setDeletingPost(true);
-    try{
-      await deletePost({token, postId});
+    try {
+      await deletePost({ token, postId });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       setModalOpen(false);
-      alert("Can't delete post")
+      alert("Can't delete post");
     }
-    setDeletingPost(false)
+    setDeletingPost(false);
     setModalOpen(false);
     window.location.href = window.location.href;
   }
@@ -116,7 +117,7 @@ function Posts(props) {
     setRefresh(true);
   }
 
-  async function postComment(postId){
+  async function postComment(postId) {
     const body = {
       postId,
       comment: comment
@@ -125,115 +126,127 @@ function Posts(props) {
     try {
       const authConfig = (token) => ({
         headers: { Authorization: `Bearer ${token}` }
-      })
+      });
       await axios.post(`${Url}/comment`, body, authConfig(token));
-      setComment("")
-      sendComment(postId)
+      setComment('');
+      sendComment(postId);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
-  async function sendComment(id){
+  async function sendComment(id) {
     try {
       const authConfig = (token) => ({
         headers: { Authorization: `Bearer ${token}` }
-      })
-      const {data} = await axios.get(`${Url}/comment/${id}`,authConfig(token));
-      setDataComment(data)
-      setOpen(!open)
+      });
+      const { data } = await axios.get(`${Url}/comment/${id}`, authConfig(token));
+      setDataComment(data);
+      setOpen(!open);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
   return (
-    <>
+    <S.Geral>
       <S.Container data-test="post">
-          <S.Content>
-            <S.ProfilePic>
-              <img src={photo} alt="profile pic" />
-              {isLiked ? <AiFillHeart color="red" onClick={toggleLike} /> : <AiOutlineHeart onClick={toggleLike} />}
-              {<S.Like>{likesCount === 1 ? `${likesCount} like` : `${likesCount} likes`}</S.Like>}
-              <div onClick={() => sendComment(postId)}>
+        <S.Content>
+          <S.ProfilePic>
+            <img src={photo} alt="profile pic" />
+            {isLiked ? <AiFillHeart color="red" onClick={toggleLike} /> : <AiOutlineHeart onClick={toggleLike} />}
+            {<S.Like>{likesCount === 1 ? `${likesCount} like` : `${likesCount} likes`}</S.Like>}
+            <div data-test="comment-btn" onClick={() => sendComment(postId)}>
               <AiOutlineComment fontSize={23} />
-              {dataComment.length}
+              <span data-test="comment-counter">{commentCount} comments</span>
             </div>
             <div>
               <GoGitCompare fontSize={21} />
-              176
+              <p>{repostCount}</p>
             </div>
           </S.ProfilePic>
-            <S.PostContent>
-              <S.PostHeader>
-                <h3 data-test="username" onClick={() => redirectPage(id)}>
-                  {name}
-                </h3>
-                <S.BySide>
-                  {/* {postOwner && <TiPencil />} */}
-                  {postOwner && <TbTrashFilled onClick={() => toggleModal()}/>}
-                </S.BySide>
-              </S.PostHeader>
-              <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => refreshHashtag(tag)}>
-                <p data-test="description">{content}</p>
-              </ReactTagify>
-              <S.Metadata data-test="link" href={url} target="_blank" rel="noopener noreferrer">
-                <div>
-                  <h3>{urlTitle}</h3>
-                  <p> {urlDescription}</p>
-                </div>
-                <img src={urlImage} alt="metadata image" />
-              </S.Metadata>
-            </S.PostContent>
-          </S.Content>
-        </S.Container>
-      { modalOpen &&
+          <S.PostContent>
+            <S.PostHeader>
+              <h3 data-test="username" onClick={() => redirectPage(id)}>
+                {name}
+              </h3>
+              <S.BySide>
+                {/* {postOwner && <TiPencil />} */}
+                {postOwner && <TbTrashFilled onClick={() => toggleModal()} />}
+              </S.BySide>
+            </S.PostHeader>
+            <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => refreshHashtag(tag)}>
+              <p data-test="description">{content}</p>
+            </ReactTagify>
+            <S.Metadata data-test="link" href={url} target="_blank" rel="noopener noreferrer">
+              <div>
+                <h3>{urlTitle}</h3>
+                <p> {urlDescription}</p>
+              </div>
+              <img src={urlImage} alt="metadata image" />
+            </S.Metadata>
+          </S.PostContent>
+        </S.Content>
+      </S.Container>
+      {modalOpen && (
         <DeleteModal setModalOpen={setModalOpen}>
           <p>Are you sure you want to delete this post?</p>
           <div>
-              <button
-                  data-test="cancel"
-                  onClick={() => {setModalOpen(false)}}
-                  disabled={deletingPost}>
-                  No, go back
-              </button>
-              <button
-                  data-test="confirm"
-                  onClick={() => {
-                    deletePostFromDb(postId);
-                  }}
-                  disabled={deletingPost}>
-                  {deletingPost ? "Deleting ..." : "Yes, delete it"}
-              </button>
+            <button
+              data-test="cancel"
+              onClick={() => {
+                setModalOpen(false);
+              }}
+              disabled={deletingPost}
+            >
+              No, go back
+            </button>
+            <button
+              data-test="confirm"
+              onClick={() => {
+                deletePostFromDb(postId);
+              }}
+              disabled={deletingPost}
+            >
+              {deletingPost ? 'Deleting ...' : 'Yes, delete it'}
+            </button>
           </div>
         </DeleteModal>
-      }
+      )}
 
       {open ? (
-        <S.Comment>
+        <S.Comment data-test="comment-box">
           <ul>
-            {dataComment.map((item)=> <li>
-              <S.UserImg>
-                <img src={item.photo} alt="Eu" />
-              </S.UserImg>
-              <div>
-                <S.UserConteiner>
-                  <p>{item.name}</p>
-                  <div>
-                    <spam>.</spam>following
-                  </div>
-                </S.UserConteiner>
-                <div className='comment'>{item.content}</div>
-              </div>
-            </li>)}
+            {dataComment.map((item) => (
+              <li data-test="comment">
+                <S.UserImg>
+                  <img src={item.photo} alt="Eu" />
+                </S.UserImg>
+                <div>
+                  <S.UserConteiner>
+                    <p>{item.name}</p>
+                    <div>
+                      <spam>.</spam>following
+                    </div>
+                  </S.UserConteiner>
+                  <div className="comment">{item.content}</div>
+                </div>
+              </li>
+            ))}
           </ul>
           <S.Input>
             <S.UserImg>
               <img src={Userphoto} alt="eu" />
             </S.UserImg>
             <S.InputComment>
-              <input type="text" placeholder="write a comment..." value={comment} onChange={(e)=> setComment(e.target.value)}/>
+              <input
+                data-test="comment-input"
+                type="text"
+                placeholder="write a comment..."
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
               <p>
-                <BsSend fontSize={20} onClick={()=>postComment(postId)} />
+                <BsSend data-test="comment-submit" color='#fff' fontSize={20} onClick={() => postComment(postId)} />
               </p>
             </S.InputComment>
           </S.Input>
@@ -241,7 +254,7 @@ function Posts(props) {
       ) : (
         ''
       )}
-    </>
+    </S.Geral>
   );
 }
 export default Posts;
