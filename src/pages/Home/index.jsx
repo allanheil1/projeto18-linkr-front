@@ -52,7 +52,7 @@ function Home() {
 
   useInterval(() => {
     const checkNewPosts = async () => {
-      const lastPostCreatedAt = posts[0]?.createdAt || '2023-03-26T01:12:54.948Z';
+      const lastPostCreatedAt = posts[0]?.createdAt || '2022-03-26T01:12:54.948Z';
       const lastPostId = posts[0]?.postId || 1000
       try {
         const res = await countNewPosts({ token, lastPostCreatedAt, lastPostId });
