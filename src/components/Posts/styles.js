@@ -5,6 +5,7 @@ export const Geral = styled.div`
    height: auto;
    background: #171719;
    border-radius: 18px;
+   position: relative;
 `;
 export const Container = styled.div`
   max-width: 611px;

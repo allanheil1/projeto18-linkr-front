@@ -3,11 +3,12 @@ import DeleteModal from './utils/Modal.js';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineHeart, AiFillHeart, AiOutlineComment } from 'react-icons/ai';
 import { GoGitCompare } from 'react-icons/go';
+import { BiRepost } from 'react-icons/bi';
 import { BsSend } from 'react-icons/bs';
 import { TbTrashFilled } from 'react-icons/tb';
 import { TiPencil } from 'react-icons/ti';
 import { ReactTagify } from 'react-tagify';
-import { getLikesAndOwnership, likePost, dislikePost, deletePost } from '../../service';
+import { getLikesAndOwnership, likePost, dislikePost, deletePost , getRepost , postRepost } from '../../service';
 import * as S from './styles';
 import CommentModal from '../Modal/Modal.jsx';
 import axios from 'axios';
@@ -34,9 +35,12 @@ function Posts(props) {
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
+  const [repostsCount, setRepostsCount] = useState(0);
   const [postOwner, setPostOwner] = useState(false);
   const [comment, setComment] = useState();
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalRepostOpen, setModalRepostOpen] = useState(false);
+  const [reposting, setReposting] = useState(false);
   const [deletingPost, setDeletingPost] = useState(false);
   const token = localStorage.getItem('token');
   const Userphoto = localStorage.getItem('photo');
@@ -63,6 +67,21 @@ function Posts(props) {
     }
     getPostLikes();
   }, []);
+
+  useEffect(()=>{
+    async function getPostReposts(){
+      try{
+        setIsLoading(true);
+        const response= await getRepost({token,postId});
+        setRepostsCount(response.data.qnt);
+        setIsLoading(false);
+      }catch(err){
+        console.log(err);
+        setIsLoading(false);
+      }
+    }
+    getPostReposts();
+  },[]);
 
   const redirectPage = (id) => {
     navigate(`/user/${id}`);
@@ -147,6 +166,14 @@ function Posts(props) {
     }
   }
 
+  function repostModal(){
+    if(modalRepostOpen){
+      setModalRepostOpen(false);
+    }else{
+      setModalRepostOpen(true);
+    }
+  }
+
   return (
     <S.Geral>
       <S.Container data-test="post">
@@ -159,9 +186,9 @@ function Posts(props) {
               <AiOutlineComment fontSize={23} />
               <span data-test="comment-counter">{commentCount} comments</span>
             </div>
-            <div>
-              <GoGitCompare fontSize={21} />
-              <p>{repostCount}</p>
+            <div data-test="repost-counter">
+              <BiRepost data-test="repost-btn" font-size={21} onClick={()=>setModalRepostOpen(true)}/>
+              <span data-test="repost-counter">{repostsCount === 1 ? `${repostsCount} re-post` : `${repostsCount} re-posts`} </span>
             </div>
           </S.ProfilePic>
           <S.PostContent>
@@ -211,6 +238,10 @@ function Posts(props) {
             </button>
           </div>
         </DeleteModal>
+      )}
+
+      {modalRepostOpen &&(
+        <CommentModal setModalRepostOpen={setModalRepostOpen} repostModal={repostModal} postId={postId}/>
       )}
 
       {open ? (
