@@ -86,7 +86,7 @@ function Home() {
         <h1>Timeline</h1>
         <Publish setRefresh={setRefresh} />
         {newPostsCount > 0 && (
-          <S.NewPostsBtn onClick={handleNewPostsClick}>
+          <S.NewPostsBtn data-test="load-btn" onClick={handleNewPostsClick}>
             {newPostsCount} new posts, load more!
             <div>
               <TbRefresh />
