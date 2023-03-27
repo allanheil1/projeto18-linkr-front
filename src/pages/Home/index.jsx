@@ -121,6 +121,7 @@ function Home() {
                 urlTitle={p.urlTitle}
                 urlDescription={p.urlDescription}
                 urlImage={p.urlImage}
+                repostedBy={p.repostedBy}
               />
             ))}
           </InfiniteScroll>

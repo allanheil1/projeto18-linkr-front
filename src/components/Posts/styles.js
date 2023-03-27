@@ -10,10 +10,11 @@ export const Geral = styled.div`
 export const Container = styled.div`
   max-width: 611px;
   width: 100vw;
-  height: 232px;
+  height: auto;//232px
   background: #171717;
   margin-top: 16px;
-  padding-top: 9px;
+  //padding-top: 9px;
+  padding-bottom: 5px;
   font-family: 'Lato';
   border-radius: 16px;
   box-shadow: 4px 4px 8px 0px rgba(180, 180, 207, 0.2);
@@ -230,4 +231,8 @@ export const InputComment = styled.div`
     right: 8px;
   }
 `
-
+export const Reposted=styled.div`
+  color: white;
+  height: auto;
+  padding: 10px;
+`

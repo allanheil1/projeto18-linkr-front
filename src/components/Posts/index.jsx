@@ -29,7 +29,8 @@ function Posts(props) {
     urlImage,
     setSearchResults,
     SetSearchQuery,
-    setRefresh
+    setRefresh,
+    repostedBy
   } = props;
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
@@ -46,6 +47,8 @@ function Posts(props) {
   const Userphoto = localStorage.getItem('photo');
   const [dataComment, setDataComment] = useState([]);
   const Url = process.env.REACT_APP_API_URL;
+
+  const [isRep, setIsRep] = useState(false);
 
   useEffect(() => {
     async function getPostLikes() {
@@ -174,9 +177,17 @@ function Posts(props) {
     }
   }
 
+  function rep(){
+    if(repostedBy!=null){
+      setIsRep(true);
+    }
+  }
+
   return (
     <S.Geral>
       <S.Container data-test="post">
+        {/* {isRepostedBy? ( <S.Reposted><BiRepost/> reposted by <strong>{repostedBy}</strong></S.Reposted>): (<S.Reposted>gfgrd</S.Reposted>)} */}
+        <S.Reposted>{repostedBy}</S.Reposted>
         <S.Content>
           <S.ProfilePic>
             <img src={photo} alt="profile pic" />
@@ -198,7 +209,7 @@ function Posts(props) {
               </h3>
               <S.BySide>
                 {/* {postOwner && <TiPencil />} */}
-                {postOwner && <TbTrashFilled onClick={() => toggleModal()} data-test="delete-btn"/>}
+                {postOwner && <div><TiPencil/><TbTrashFilled onClick={() => toggleModal()} data-test="delete-btn"/></div>}
               </S.BySide>
             </S.PostHeader>
             <ReactTagify tagStyle={S.tagStyle} tagClicked={(tag) => refreshHashtag(tag)}>
