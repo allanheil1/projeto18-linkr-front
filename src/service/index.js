@@ -31,3 +31,7 @@ export const likePost = ({ token, postId }) => api.post(`/like/${postId}`, null,
 export const dislikePost = ({token, postId}) => api.post(`/dislike/${postId}`, null, authConfig(token));
 
 export const deletePost = ({token, postId}) => api.delete(`/post/${postId}`, authConfig(token));
+
+export const getRepost = ({ token, postId }) => api.get(`/post/${postId}/reposts`, authConfig(token));
+
+export const postRepost = ({ token, postId }) => api.post(`/post/${postId}/repost`, authConfig(token));

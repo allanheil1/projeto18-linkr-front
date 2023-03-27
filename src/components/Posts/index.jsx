@@ -8,7 +8,7 @@ import { BsSend } from 'react-icons/bs';
 import { TbTrashFilled } from 'react-icons/tb';
 import { TiPencil } from 'react-icons/ti';
 import { ReactTagify } from 'react-tagify';
-import { getLikes, likePost, dislikePost, deletePost } from '../../service';
+import { getLikes, likePost, dislikePost, deletePost , getRepost , postRepost } from '../../service';
 import * as S from './styles';
 import CommentModal from '../Modal/Modal';
 import axios from 'axios';
@@ -33,8 +33,11 @@ function Posts(props) {
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
+  const [repostsCount, setRepostsCount] = useState(0);
   const [comment, setComment] = useState()
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalRepostOpen, setModalRepostOpen] = useState(false);
+  const [reposting, setReposting] = useState(false);
   const [deletingPost, setDeletingPost] = useState(false)
   const token = localStorage.getItem('token');
   const Userphoto = localStorage.getItem('photo');
@@ -57,6 +60,21 @@ function Posts(props) {
     }
     getPostLikes();
   }, []);
+
+  useEffect(()=>{
+    async function getPostReposts(){
+      try{
+        setIsLoading(true);
+        const response= await getRepost({token,postId});
+        setRepostsCount(response.data.qnt);
+        setIsLoading(false);
+      }catch(err){
+        console.log(err);
+        setIsLoading(false);
+      }
+    }
+    getPostReposts();
+  },[]);
 
   const redirectPage = (id) => {
     navigate(`/user/${id}`);
@@ -90,6 +108,28 @@ function Posts(props) {
     }else{
       setModalOpen(true);
     }
+  }
+
+  
+
+  function repostModal(){
+    if(modalRepostOpen){
+      setModalRepostOpen(false);
+    }else{
+      setModalRepostOpen(true);
+    }
+  }
+
+  async function repost(){
+    setReposting(true);
+    try{
+      await postRepost({token,postId});
+    }catch(err){
+      console.log(err);
+    }
+    setReposting(false);
+    setModalRepostOpen(false);
+    window.location.href = window.location.href;
   }
 
   async function deletePostFromDb(postId) {
@@ -128,6 +168,10 @@ function Posts(props) {
     }
   }
 
+  function callModal(){
+    return <CommentModal postId={postId} />
+  }
+
   return (
     <>
       <S.Container data-test="post">
@@ -141,8 +185,8 @@ function Posts(props) {
               209
             </div>
             <div>
-              <BiRepost fontSize={21} />
-              176
+              <BiRepost fontSize={21} onClick={()=>repostModal()}/>
+              {repostsCount === 1 ? `${repostsCount} re-post` : `${repostsCount} re-posts`}
             </div>
           </S.ProfilePic>
             <S.PostContent>
@@ -185,6 +229,27 @@ function Posts(props) {
                   }}
                   disabled={deletingPost}>
                   {deletingPost ? "Deleting ..." : "Yes, delete it"}
+              </button>
+          </div>
+        </DeleteModal>
+      }
+
+      { modalRepostOpen &&
+        <DeleteModal setModalRepostOpen={setModalRepostOpen}>
+          <p>Do you want to re-post
+this link?</p>
+          <div>
+              <button
+                  onClick={() => {setModalRepostOpen(false)}}
+                  disabled={reposting}>
+                  No, go back
+              </button>
+              <button
+                  onClick={() => {
+                    repost(postId);
+                  }}
+                  disabled={reposting}>
+                  {reposting ? "Reposting ..." : "Yes, repost it"}
               </button>
           </div>
         </DeleteModal>
