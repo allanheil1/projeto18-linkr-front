@@ -24,7 +24,8 @@ function Home() {
   const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(0);
   const [newPostsCount, setNewPostsCount] = useState(0);
-  const followsAnyone = posts[0]?.followsAnyone
+  const [followsAnyone, setFollowsAnyone] = useState(null);
+
 
   const fetchPosts = async () => {
     checkLogin();
@@ -34,7 +35,7 @@ function Home() {
       const res = await listPost({ token, offset });
 
       const newPosts = res.data.metadataArray;
-
+      setFollowsAnyone(res.data.followsSomeone)
       if (newPosts.length === 0) {
         setHasMore(false);
         return false;
@@ -49,7 +50,6 @@ function Home() {
       setLoading(false);
     }
   };
-
   useInterval(() => {
     const checkNewPosts = async () => {
       const lastPostCreatedAt = posts[0]?.createdAt || '2022-03-26T01:12:54.948Z';
@@ -117,6 +117,7 @@ function Home() {
                 photo={p.photo}
                 content={p.content}
                 url={p.url}
+                commentCount={p.commentCount}
                 urlTitle={p.urlTitle}
                 urlDescription={p.urlDescription}
                 urlImage={p.urlImage}
