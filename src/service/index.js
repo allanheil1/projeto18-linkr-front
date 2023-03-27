@@ -35,3 +35,5 @@ export const deletePost = ({ token, postId }) => api.delete(`/post/${postId}`, a
 
 export const followUser = ({ token, id }) => api.post(`/follows/${id}`, null, authConfig(token));
 export const unfollowUser = ({ token, id }) => api.delete(`/follows/${id}`, authConfig(token));
+
+export const searchUsers = ({ token }) => api.get(`/users`, authConfig(token))

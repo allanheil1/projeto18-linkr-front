@@ -9,84 +9,83 @@ import List from '../../components/Header/List.jsx';
 import { useParams } from 'react-router-dom';
 import Trending from '../../components/Trending/Trending.js';
 import Modal from '../../components/Modal/Modal.jsx';
-import { followUser, unfollowUser } from '../../service/index.js';
+import { followUser, searchUsers, unfollowUser } from '../../service/index.js';
 
 export default function UserPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([]);
-  const [infoUser, setInfoUser] = useState([]);
-  const [follow, setFollow] = useState(false)
-  const [isDisabled, setIsDisabled] = useState(false)
-  const { id } = useParams();
-  const token = localStorage.getItem('token');
-  const url = process.env.REACT_APP_API_URL
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [infoUser, setInfoUser] = useState([]);
+    const [follow, setFollow] = useState(false)
+    const [isDisabled, setIsDisabled] = useState(false)
+    const { id } = useParams();
+    const token = localStorage.getItem('token');
+    const url = process.env.REACT_APP_API_URL
 
-  function handleSearch(event) {
-    const searchTerm = event.target.value;
+    async function handleSearch(event) {
+        const searchTerm = event.target.value;
 
         if (searchTerm.length >= 3) {
-            const authConfig = (token) => ({
-                headers: { Authorization: `Bearer ${token}` }
-              })
-
-            axios.get(`${url}/users`,authConfig(token)).then((response) => {
-                const filteredUsers = response.data.filter(user =>
+            try{
+                const users = searchUsers({token})
+                const filteredUsers = users.rows.filter(user =>
                     user.name.toLowerCase().includes(searchTerm.toLowerCase())
                 );
                 setFilteredUsers(filteredUsers);
-            });
+            }catch(e){
+                alert(e.message)
+            }
         } else {
             setFilteredUsers([]);
         }
 
-    setSearchQuery(searchTerm);
-  }
+        setSearchQuery(searchTerm);
+    }
 
-  async function followClick(){
-    try{
-        if (!follow){
-            setIsDisabled(true)
-            await followUser({token, id})
-            setFollow(true)
-        } else {
-            setIsDisabled(true)
-            await unfollowUser({token, id})
-            setFollow(false)
+    async function followClick() {
+        try {
+            if (!follow) {
+                setIsDisabled(true)
+                await followUser({ token, id })
+                setFollow(true)
+            } else {
+                setIsDisabled(true)
+                await unfollowUser({ token, id })
+                setFollow(false)
+            }
+            setIsDisabled(false)
+        } catch (err) {
+            alert(err.message);
         }
-        setIsDisabled(false)
-    } catch(err){
-        alert(err.message);
     }
-  }
 
-  useEffect(() => {
-    setSearchResults(filteredUsers);
-  }, [filteredUsers]);
-
-  useEffect(()=> {
-    try {
-        const authConfig = (token) => ({
-            headers: { Authorization: `Bearer ${token}` }
-
-          });
-        const res = axios.get(`${url}/follows/${id}`, authConfig(token));
-        res.then((r) => {
-            setFollow(r.data);
-        }).catch((e) => {
-            console.log(e.message);
-        });
-    } catch (error) {
-        console.log(error.message);
-    }
-  }, [follow])
+    useEffect(() => {
+        setSearchResults(filteredUsers);
+    }, [filteredUsers]);
 
     useEffect(() => {
         try {
             const authConfig = (token) => ({
                 headers: { Authorization: `Bearer ${token}` }
 
-              });
+            });
+            const res = axios.get(`${url}/follows/${id}`, authConfig(token));
+            res.then((r) => {
+                setFollow(r.data);
+            }).catch((e) => {
+                console.log(e.message);
+            });
+        } catch (error) {
+            console.log(error.message);
+        }
+    }, [follow])
+
+    useEffect(() => {
+        try {
+            const authConfig = (token) => ({
+                headers: { Authorization: `Bearer ${token}` }
+
+            });
             const res = axios.get(`${url}/user/${id}`, authConfig(token));
             res.then((r) => {
                 setInfoUser(r.data);
@@ -123,7 +122,7 @@ export default function UserPage() {
                                 <img src={infoUser.photo} alt={infoUser.name} />
                             </span>
                             <h2>{infoUser[0]?.name}</h2>
-                            {follow !== "same" && <button onClick={followClick} disabled={false}>{follow ? 'Unfollow':'Follow'}</button>}
+                            {follow !== "same" && <button onClick={followClick} disabled={false}data-test="follow-btn">{follow ? 'Unfollow' : 'Follow'}</button>}
                         </S.ProfileStyle>
                     </div>
                     {infoUser.map(p => <Posts id={p.id}
