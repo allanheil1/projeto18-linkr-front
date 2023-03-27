@@ -27,8 +27,8 @@ export default function CommentModal(props){
 this link?</p>
                 </S.Text>
                 <S.Buttons>
-                    <div className="cancel" onClick={repostModal}>No, cancel</div>
-                    <div className="share" onClick={repost}>{reposting? 'Reposting...':'Yes, share!'}</div>
+                    <div className="cancel" onClick={repostModal} data-test="cancel">No, cancel</div>
+                    <div className="share" onClick={repost} data-test="confirm">{reposting? 'Reposting...':'Yes, share!'}</div>
                 </S.Buttons>
             </S.Modal>
         </S.ConteinerModal>
